@@ -1,0 +1,11 @@
+{% extends "blog/main.html" %}
+
+{% block content %}
+<h4>Follow other users</h4>
+
+<h4>Following</h4>
+<h4>Users</h4>
+{% for user in all_users %}
+    <div class="users-list">{{ user }}</div>
+{% endfor %}
+{% endblock %}

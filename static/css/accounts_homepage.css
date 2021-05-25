@@ -1,0 +1,38 @@
+.reviews-container{
+    width:40%;
+    display:flex;
+    margin:auto;
+}
+
+form{
+    margin:auto;
+}
+
+.nav-item{
+    margin-left:40px;
+    font-size:1.2em;
+}
+
+.user_review{
+    position:relative;
+    width:80%;
+    margin:auto;
+    border:0.5px solid;
+    padding:10px 10px;
+}
+
+ .stars i {
+     font-size: 18px;
+     color: #28a745
+ }
+
+.review_date{
+    position:absolute;
+    right:10px;
+    top:10px;
+}
+
+.review_title{
+    margin-top:20px;
+    text-align:center;
+}

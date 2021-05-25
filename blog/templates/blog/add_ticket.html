@@ -1,0 +1,15 @@
+{% extends "blog/main.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <br/>
+    <form method="POST" action="{% url 'add_ticket' %}">
+        {% csrf_token %}
+        {{ form.management_form }}
+        {% for field in form %}
+            {{field|as_crispy_field}}
+            <hr>
+        {% endfor %}
+        <input type="submit" value="Send" />
+    </form>
+{% endblock %}
