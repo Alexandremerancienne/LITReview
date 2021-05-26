@@ -1,3 +1,7 @@
+html, body{
+    background-color:#ebeff5;
+}
+
 .reviews-container{
     width:40%;
     display:flex;

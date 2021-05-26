@@ -6,4 +6,5 @@ urlpatterns = [
     path("addticket/<int:id_ticket>", views.add_ticket, name="add_ticket"),
     path("addreview/", views.add_review, name="add_review"),
     path("community/", views.see_all_users, name="see_all_users"),
+    path("unfollow_user/", views.unfollow_user, name="unfollow_user"),
 ]
