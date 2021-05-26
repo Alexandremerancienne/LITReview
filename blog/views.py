@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import NewTicketForm, NewReviewForm, FollowUserForm
 from .models import Ticket, Review, UserFollows
 from accounts.models import AppUser
@@ -43,14 +43,15 @@ def add_review(request, id_review=None):
             return redirect("/")
 
 
-def see_all_users(request):
+def see_users(request):
     all_users = AppUser.objects.all().order_by("username")
     followed_users = UserFollows.objects.filter(user=request.user)
     form = FollowUserForm()
     if request.method == "POST":
         form = FollowUserForm(request.POST)
         id_user = request.POST["followed_user"]
-        followed_user = AppUser.objects.get(id=id_user)
+        followed_user = get_object_or_404(AppUser, id=id_user)
+        print("followed user", followed_user)
         if form.is_valid():
             new_relation = form.save(commit=False)
             new_relation.user = request.user
@@ -60,9 +61,19 @@ def see_all_users(request):
     return render(request, "blog/community.html", context)
 
 
-def unfollow_user(request):
-    followed_users = UserFollows.objects.filter(user=request.user)
-    context = {"followed_users": followed_users}
+def unfollow_user(request, id_user):
+    followed_user = get_object_or_404(AppUser, id=id_user)
+    context = {"followed_user": followed_user}
     return render(request, "blog/unfollow_user.html", context)
 
 
+def confirm_unfollow(request, id_user):
+    followed_user = get_object_or_404(AppUser, id=id_user)
+    if request.method == "POST":
+        relation = UserFollows.objects.filter(
+            user=request.user, followed_user=followed_user
+        )
+        relation.delete()
+        return redirect("/community/")
+    context = {"followed_user": followed_user}
+    return render(request, "blog/unfollow_user.html", context)
