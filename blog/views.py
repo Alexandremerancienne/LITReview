@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import NewTicketForm, NewReviewForm, FollowUserForm
+from .forms import NewTicketForm, NewReviewForm, FollowUserForm, SearchUserForm
 from .models import Ticket, Review, UserFollows
 from accounts.models import AppUser
 
@@ -44,20 +44,28 @@ def add_review(request, id_review=None):
 
 
 def see_users(request):
-    all_users = AppUser.objects.all().order_by("username")
-    followed_users = UserFollows.objects.filter(user=request.user)
-    form = FollowUserForm()
+    users = AppUser.objects.all().order_by("username")
+    users_names = [user.username for user in users]
+    relations = UserFollows.objects.filter(user=request.user)
+    relations_users = [relation.followed_user.username for relation in relations]
+    form = SearchUserForm()
     if request.method == "POST":
-        form = FollowUserForm(request.POST)
-        id_user = request.POST["followed_user"]
-        followed_user = get_object_or_404(AppUser, id=id_user)
-        print("followed user", followed_user)
+        form = SearchUserForm(request.POST)
+        followed_name = request.POST["user_name"]
+        if followed_name == request.user.username:
+            return redirect('/community/')
+        elif relations_users.count(followed_name) > 0:
+            return redirect('/community/')
+        elif users_names.count(followed_name) == 0:
+            return redirect('/community/')
         if form.is_valid():
-            new_relation = form.save(commit=False)
+            new_relation = UserFollows()
             new_relation.user = request.user
+            followed_user = AppUser.objects.get(username=followed_name)
             new_relation.followed_user = followed_user
             new_relation.save()
-    context = {"all_users": all_users, "form": form, "followed_users": followed_users}
+    new_relations = UserFollows.objects.filter(user=request.user).order_by("followed_user")
+    context = {"users": users, "form": form, "new_relations": new_relations}
     return render(request, "blog/community.html", context)
 
 

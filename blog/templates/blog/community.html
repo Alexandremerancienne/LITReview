@@ -5,19 +5,19 @@
 
 <h4>Follow other users</h4>
 
-<form method="POST" action="{% url 'see_users' %}">
+<form method="POST" >
     {% csrf_token %}
     {% for field in form %}
         {{field|as_crispy_field}}
     {% endfor %}
-    <input class="btn btn-primary" type="submit" value="Send" />
+    <input class="btn btn-primary" href="{% url 'see_users' %}" type="submit" value="Send" />
 </form>
 
 <h4>Following</h4>
 
-{% for user in followed_users %}
-    <div class="users-list">{{ user }}
-    <form action="{% url 'unfollow_user' user.followed_user.id %}" method="POST" >
+{% for relation in new_relations %}
+    <div class="users-list">{{ relation.followed_user.username }}
+    <form action="{% url 'unfollow_user' relation.followed_user.id %}" method="POST" >
     {% csrf_token %}
     <input class="btn btn-danger" type="submit" value="Unfollow" />
     </form></div>
@@ -25,7 +25,7 @@
 
 <h4>Users</h4>
 
-{% for user in all_users %}
+{% for user in users %}
     <div class="users-list">{{ user }}</div>
 {% endfor %}
 
