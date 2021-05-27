@@ -18,8 +18,8 @@
 {% for relation in new_relations %}
     <div class="users-list">{{ relation.followed_user.username }}
     <form action="{% url 'unfollow_user' relation.followed_user.id %}" method="POST" >
-    {% csrf_token %}
-    <input class="btn btn-danger" type="submit" value="Unfollow" />
+        <input class="btn btn-danger" type="submit" value="Unfollow" />
+        {% csrf_token %}
     </form></div>
 {% endfor %}
 

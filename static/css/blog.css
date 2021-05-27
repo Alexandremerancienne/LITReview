@@ -3,7 +3,7 @@ body{
 }
 
 form {
-    width: 70%;
+    width: 50%;
     margin:auto;
 }
 
@@ -18,10 +18,9 @@ h4{
 }
 
 .users-list{
-    width:70%;
+    width:10%;
     margin:auto;
     text-align:center;
-    border:0.5px solid;
 }
 
 .delete-buttons{
