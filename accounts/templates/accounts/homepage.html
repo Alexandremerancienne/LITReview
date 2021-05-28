@@ -63,7 +63,7 @@
       {{ review.time_created }}
       </div>
       <div class="review_title">
-        <b>{{ review.headline }}</b><br/>
+        <b>{{ review.headline }} ({{ review.rating }}/5)</b><br/>
         {% with score=review.rating remaining_points=5|sub:review.rating %}
             {% with ''|center:score as yellow_stars %}
               {% for _ in yellow_stars %}
@@ -77,7 +77,9 @@
             {% endwith %}
         {% endwith %}
           <br/>
-        {{ review.body }}
+        {% if review.body %}
+          <div class="review-body">"{{ review.body }}"</div>
+        {% endif %}
       </div>
     </div>
     <br/>
