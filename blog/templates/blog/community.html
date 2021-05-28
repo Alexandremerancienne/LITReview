@@ -3,31 +3,41 @@
 
 {% block content %}
 
-<h4>Follow other users</h4>
+<div class="community_container">
+    <div class="follow-users">
+        <h4>Follow other users</h4>
+        <form method="POST" >
+            {% for field in form %}
+                {{field|as_crispy_field}}
+                <input class="btn btn-primary" href="{% url 'see_users' %}" type="submit" value="Send" />
+            {% endfor %}
+            {% csrf_token %}
+        </form>
+    </div>
 
-<form method="POST" >
-    {% csrf_token %}
-    {% for field in form %}
-        {{field|as_crispy_field}}
-    {% endfor %}
-    <input class="btn btn-primary" href="{% url 'see_users' %}" type="submit" value="Send" />
-</form>
+    <div class="following">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <h4>Following</h4>
+                    {% for relation in new_relations %}
+                            <form class="unfollow-user" action="{% url 'unfollow_user' relation.followed_user.id %}" method="POST" >
+                                {{ relation.followed_user.username }}
+                                <input class="btn btn-danger" type="submit" value="Unfollow" />
+                                {% csrf_token %}
+                            </form>
+                    {% endfor %}
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
 
-<h4>Following</h4>
-
-{% for relation in new_relations %}
-    <div class="users-list">
-    <form action="{% url 'unfollow_user' relation.followed_user.id %}" method="POST" >
-        {{ relation.followed_user.username }}
-        <input class="btn btn-danger" type="submit" value="Unfollow" />
-        {% csrf_token %}
-    </form></div>
-{% endfor %}
-
-<h4>Users</h4>
-
-{% for user in users %}
-    <div class="users-list">{{ user }}</div>
-{% endfor %}
+    <div class="all_users_list">
+        <h4>Users</h4>
+        {% for user in users %}
+            <div class="users-list">{{ user }}</div>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock %}

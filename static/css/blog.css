@@ -1,3 +1,29 @@
+html, body{
+    height:100%;
+}
+
+.community_container{
+    height:100%;
+}
+
+.follow-users, .all_users_list, .following{
+    height:20%;
+}
+
+.unfollow-user{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    background-color:white;
+    padding-left:25px;
+    margin-top:7px;
+}
+
+.users-list{
+    padding-top:5px;
+}
+
 body{
     background-color:#ebeff5;
 }
@@ -21,6 +47,8 @@ h4{
     width:30%;
     margin:auto;
     text-align:center;
+    background-color:white;
+    margin-top:5px;
 }
 
 .delete-buttons{

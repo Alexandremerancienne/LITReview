@@ -4,9 +4,10 @@
 
 .user_review{
     position:relative;
-    width:65%;
+    width:60%;
     margin:auto;
-    border:0.5px solid;
+    border:0.5px groove;
     padding:10px 10px;
 }
+
 
