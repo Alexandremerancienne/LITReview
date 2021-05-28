@@ -17,7 +17,8 @@ def add_ticket(request, id_ticket=None):
     )
     if request.method == "GET":
         form = NewTicketForm(instance=ticket_instance)
-        return render(request, "blog/add_ticket.html", locals())
+        context = {"form": form}
+        return render(request, "blog/add_ticket.html", context)
     elif request.method == "POST":
         form = NewTicketForm(request.POST)
         if form.is_valid():

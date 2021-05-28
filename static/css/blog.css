@@ -21,6 +21,7 @@ h4{
     width:60%;
     margin:auto;
     text-align:center;
+    border:solid 0.5px;
 }
 
 .delete-buttons{
