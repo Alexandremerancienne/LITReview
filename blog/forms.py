@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ModelForm
+
 from blog.models import Ticket, Review, UserFollows
 
 
@@ -19,7 +20,7 @@ class NewReviewForm(ModelForm):
         ("5", "5"),
     )
     rating = forms.ChoiceField(
-        widget=forms.RadioSelect(), choices=RATING_CHOICE, label="Rating"
+        widget=forms.RadioSelect, choices=RATING_CHOICE, label="Rating"
     )
 
     class Meta:

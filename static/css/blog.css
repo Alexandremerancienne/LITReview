@@ -18,13 +18,18 @@ h4{
 }
 
 .users-list{
-    width:60%;
+    width:30%;
     margin:auto;
     text-align:center;
-    border:solid 0.5px;
 }
 
 .delete-buttons{
     display:flex;
     justify-content:space-evenly;
+}
+
+.delete-warning{
+    text-align:center;
+    font-size:1.2em;
+    font-weight:bold;
 }
