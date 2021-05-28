@@ -53,18 +53,20 @@ def see_users(request):
         form = SearchUserForm(request.POST)
         followed_name = request.POST["user_name"]
         if followed_name == request.user.username:
-            return redirect('/community/')
+            return redirect("/community/")
         elif relations_users.count(followed_name) > 0:
-            return redirect('/community/')
+            return redirect("/community/")
         elif users_names.count(followed_name) == 0:
-            return redirect('/community/')
+            return redirect("/community/")
         if form.is_valid():
             new_relation = UserFollows()
             new_relation.user = request.user
             followed_user = AppUser.objects.get(username=followed_name)
             new_relation.followed_user = followed_user
             new_relation.save()
-    new_relations = UserFollows.objects.filter(user=request.user).order_by("followed_user")
+    new_relations = UserFollows.objects.filter(user=request.user).order_by(
+        "followed_user"
+    )
     context = {"users": users, "form": form, "new_relations": new_relations}
     return render(request, "blog/community.html", context)
 

@@ -3,7 +3,7 @@ body{
 }
 
 form {
-    width: 50%;
+    width: 60%;
     margin:auto;
 }
 
@@ -18,7 +18,7 @@ h4{
 }
 
 .users-list{
-    width:10%;
+    width:60%;
     margin:auto;
     text-align:center;
 }

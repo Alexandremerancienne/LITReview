@@ -1,4 +1,5 @@
 {% load static %}
+{% load mathfilters %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,14 +7,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-  <link
-  rel="stylesheet"
-  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-  crossorigin="anonymous"
-  >
+  <link rel="stylesheet" type="text/css" href="{% static 'css/stars.css' %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="{% static 'css/accounts_homepage.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <title>LITReview</title>
 </head>
@@ -65,8 +63,25 @@
       {{ review.time_created }}
       </div>
       <div class="review_title">
-        {{ review.headline }} - {{review.rating}}/5<br/>
-        {{ review.body }}
+          {{ review.headline }} - {{review.rating}}/5<br/>
+        {% with score=review.rating remaining_points=5|sub:review.rating %}
+            {% with ''|center:score as yellow_stars %}
+              {% for _ in yellow_stars %}
+                  <span class="fa fa-star checked"></span>
+              {% endfor %}
+            {% endwith %}
+            {% with ''|center:remaining_points as black_stars %}
+              {% for _ in black_stars %}
+                <span class="fa fa-star"></span>
+              {% endfor %}
+            {% endwith %}
+        {% endwith %}
+
+
+
+
+          <br/>
+          {{ review.body }}
       </div>
     </div>
     <br/>

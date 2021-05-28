@@ -26,11 +26,6 @@ form{
     padding:10px 10px;
 }
 
- .stars i {
-     font-size: 18px;
-     color: #28a745
- }
-
 .review_date{
     position:absolute;
     right:10px;
@@ -41,3 +36,4 @@ form{
     margin-top:20px;
     text-align:center;
 }
+

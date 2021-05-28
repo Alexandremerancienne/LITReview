@@ -49,4 +49,3 @@ class UserFollows(models.Model):
 
     def __str__(self):
         return self.followed_user.username
-

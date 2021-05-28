@@ -11,14 +11,17 @@ class NewTicketForm(ModelForm):
 
 class NewReviewForm(ModelForm):
     RATING_CHOICE = (
-        ('0', '0'),
-        ('1', '1'),
-        ('2', '2'),
-        ('3', '3'),
-        ('4', '4'),
-        ('5', '5'),
+        ("0", "0"),
+        ("1", "1"),
+        ("2", "2"),
+        ("3", "3"),
+        ("4", "4"),
+        ("5", "5"),
     )
-    rating = forms.ChoiceField(widget=forms.RadioSelect(), choices=RATING_CHOICE, label='Rating')
+    rating = forms.ChoiceField(
+        widget=forms.RadioSelect(), choices=RATING_CHOICE, label="Rating"
+    )
+
     class Meta:
         model = Review
         fields = ["ticket", "headline", "rating", "body"]
@@ -31,4 +34,4 @@ class FollowUserForm(ModelForm):
 
 
 class SearchUserForm(forms.Form):
-    user_name = forms.CharField(label='Search User', max_length=100)
+    user_name = forms.CharField(label="Search User", max_length=100)
