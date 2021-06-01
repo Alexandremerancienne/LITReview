@@ -2,19 +2,11 @@
 
 {% block content %}
 
-<div class="row">
-	<div class="col-4"></div>
-	<div class="col-4 delete-warning">
-    <form action="" method="POST">
-
-		{% csrf_token %}
-		<div class="modify-buttons"><br/>
-			<a class="btn btn-primary" href="{% url 'edit_tickets' %}">Edit Ticket</a>
-			<a class="btn btn-primary" href="{% url 'edit_reviews' %}">Edit Review</a>
-		</div>
-	</form>
-	</div>
-	<div class="col-4"></div>
+<br/>
+<br/>
+<div class="edit-publications">
+	<a class="btn btn-primary" href="{% url 'edit_tickets' %}">Edit Ticket</a>
+	<a class="btn btn-primary" href="{% url 'edit_reviews' %}">Edit Review</a>
 </div>
 
 {% endblock %}

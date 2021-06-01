@@ -11,7 +11,6 @@
   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="{% static 'css/accounts_homepage.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="{% static 'css/stars.css' %}">
 
   <title>LITReview</title>
 </head>
@@ -48,12 +47,8 @@
   <br/>
   <br/>
   <div class="reviews-container">
-      <form action="{% url 'add_ticket' %}">
-        <input class="btn btn-primary" type="submit" value="Ask for review" />
-      </form>
-      <form action="{% url 'add_review' %}">
-        <input class="btn btn-primary" type="submit" value="Create review" />
-      </form>
+        <a href="{% url 'add_ticket' %}" class="btn btn-primary" type="submit">Ask for review</a>
+        <a href="{% url 'add_review' %}" class="btn btn-primary" type="submit">Create review</a>
   </div>
   <br/>
   {% for review in user_reviews %}
@@ -62,24 +57,29 @@
       <div class="review_date">
       {{ review.time_created }}
       </div>
+
       <div class="review_title">
         <b>{{ review.headline }} ({{ review.rating }}/5)</b><br/>
+
         {% with score=review.rating remaining_points=5|sub:review.rating %}
             {% with ''|center:score as yellow_stars %}
               {% for _ in yellow_stars %}
                   <span class="fa fa-star checked"></span>
               {% endfor %}
             {% endwith %}
+
             {% with ''|center:remaining_points as black_stars %}
               {% for _ in black_stars %}
                 <span class="fa fa-star"></span>
               {% endfor %}
             {% endwith %}
         {% endwith %}
-          <br/>
+
+        <br/>
         {% if review.body %}
           <div class="review-body">"{{ review.body }}"</div>
         {% endif %}
+
       </div>
     </div>
     <br/>

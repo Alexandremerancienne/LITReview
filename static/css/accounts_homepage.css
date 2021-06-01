@@ -2,12 +2,12 @@ html, body{
     background-color:#ebeff5;
 }
 
-.reviews-container{
-    width:40%;
+.reviews-container, .edit-publications{
+    width:30%;
     display:flex;
     margin:auto;
+    justify-content:space-between;
 }
-
 
 form{
     margin:auto;
@@ -33,3 +33,14 @@ form{
     font-style:italic;
 }
 
+.user_review{
+    position:relative;
+    width:60%;
+    margin:auto;
+    border:0.5px groove;
+    padding:10px 10px;
+}
+
+.checked{
+    color:orange;
+}

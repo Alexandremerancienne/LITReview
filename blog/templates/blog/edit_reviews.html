@@ -2,19 +2,20 @@
 
 {% block content %}
 
-<div class="row">
-	<div class="col-4"></div>
-	<div class="col-4 delete-warning">
-    <br/><p><a class="btn btn-primary" href="{% url 'edit_publications' %}">Previous</a></p>
-    <h3>My reviews</h3>
+<div class="edit-reviews">
+    <br/>
+    <br/>
+    <p><a class="btn btn-primary" href="{% url 'edit_publications' %}">< Previous</a></p>
+    <h1>My reviews</h1><br/>
     {% for review in user_reviews %}
-            <p>{{ review.headline }}
-            <a href="{% url 'edit_review' id_review=review.id %}" class="btn btn-warning" type="submit">Edit</a>
-            <a href="{% url 'delete_review' id_review=review.id %}" class="btn btn-danger" type="submit">Delete</a>
-            </p>
+        <div class="my-review">
+            {{ review.headline }}
+            <div class="edit-warnings">
+                <a href="{% url 'edit_review' id_review=review.id %}" class="btn btn-warning" type="submit">Edit</a>
+                <a href="{% url 'delete_review' id_review=review.id %}" class="btn btn-danger" type="submit">Delete</a>
+            </div>
+        </div>
     {% endfor %}
-	</div>
-	<div class="col-4"></div>
 </div>
 
 {% endblock %}

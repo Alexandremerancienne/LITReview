@@ -14,14 +14,26 @@ html, body{
     height:30%;
 }
 
-.unfollow-user{
+.unfollow-user,
+.edit-tickets .my-ticket,
+.edit-reviews .my-review{
     width:100%;
+    margin:auto;
     display:flex;
     justify-content:space-between;
     align-items:baseline;
     background-color:white;
     padding-left:25px;
     margin-top:7px;
+}
+
+.unfollow-user{
+    width:100%;
+}
+
+.edit-tickets .my-ticket,
+.edit-reviews .my-review{
+    width:70%;
 }
 
 .users-list{
@@ -56,17 +68,57 @@ h4{
 }
 
 .delete-buttons{
+    width:30%;
+    margin:auto;
     display:flex;
-    justify-content:space-evenly;
+    justify-content:space-around;
 }
 
 .delete-warning{
     text-align:center;
     font-size:1.2em;
-    font-weight:bold;
 }
 
 .review-body{
     font-weight:normal;
     font-style:italic;
+}
+
+.edit-tickets, .edit-reviews{
+    width:70%;
+    margin:auto;
+}
+
+.edit-tickets .btn-primary,
+.edit-reviews .btn-primary{
+    text-align:left;
+}
+
+.edit-tickets h1,
+.edit-reviews h1{
+    text-align:center;
+    font-size:1.7em;
+}
+
+.ticket-description,
+.review-description{
+    width:60%;
+    margin:auto;
+    margin-top:60px;
+    border:0.5px solid;
+}
+
+
+.ticket-description h2,
+.review-description h2{
+    font-size:1.1em;
+    font-weight:bold;
+    padding-top:10px;
+}
+
+.ticket-description p,
+.review-description p{
+    font-size:0.9em;
+    font-style:italic;
+    padding:10px 10px;
 }

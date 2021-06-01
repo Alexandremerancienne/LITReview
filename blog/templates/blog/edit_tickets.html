@@ -2,18 +2,21 @@
 
 {% block content %}
 
-<div class="row">
-	<div class="col-4"></div>
-	<div class="col-4 delete-warning">
-    <br/><p><a class="btn btn-primary" href="{% url 'edit_publications' %}">Previous</a></p>
-    <h3>My tickets</h3>
+<div class="edit-tickets">
+    <br/>
+    <br/>
+    <p><a class="btn btn-primary" href="{% url 'edit_publications' %}">< Previous</a></p>
+    <h1>My tickets</h1><br/>
     {% for ticket in user_tickets %}
-            <p>{{ ticket.title }}
-            <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-warning" type="submit">Edit</a>
-                <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger" type="submit">Delete</a></p>
+        <div class="my-ticket">
+            {{ ticket.title }}
+            <div class="edit-warnings">
+                <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-warning" type="submit">Edit</a>
+                <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger" type="submit">Delete</a>
+            </div>
+        </div>
     {% endfor %}
-	</div>
-	<div class="col-4"></div>
 </div>
+
 
 {% endblock %}
