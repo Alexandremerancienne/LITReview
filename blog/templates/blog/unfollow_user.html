@@ -8,15 +8,10 @@
 	<div class="col-4"></div>
 	<div class="col-4 delete-warning">
 	<p>Are you sure you want to unfollow {{followed_user}} ?</p>
-
-	<form action="{% url 'confirm_unfollow' followed_user.id %}" method="POST">
-
-		{% csrf_token %}
 		<div class="delete-buttons">
 			<a class="btn btn-warning" href="{% url 'see_users' %}">Cancel</a>
-			<input class="btn btn-danger" type="submit" value="Confirm">
+			<a class="btn btn-danger" href="{% url 'confirm_unfollow' followed_user.id %}" type="submit">Confirm</a>
 		</div>
-	</form>
 	</div>
 	<div class="col-4"></div>
 </div>

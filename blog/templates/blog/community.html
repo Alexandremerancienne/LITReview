@@ -20,13 +20,14 @@
             <div class="col-4"></div>
             <div class="col-4">
                 <h4>Following</h4>
+                <div class="unfollow-users">
                     {% for relation in new_relations %}
-                            <form class="unfollow-user" action="{% url 'unfollow_user' relation.followed_user.id %}" method="POST" >
-                                {{ relation.followed_user.username }}
-                                <input class="btn btn-danger" type="submit" value="Unfollow" />
-                                {% csrf_token %}
-                            </form>
+                        <div class="unfollow-user">
+                            {{ relation.followed_user.username }}
+                            <a class="btn btn-danger" href="{% url 'unfollow_user' relation.followed_user.id %}" type="submit">Unfollow</a>
+                        </div>
                     {% endfor %}
+                </div>
             </div>
             <div class="col-4"></div>
         </div>

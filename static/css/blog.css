@@ -6,8 +6,12 @@ html, body{
     height:100%;
 }
 
-.follow-users, .all_users_list, .following{
+.follow-users{
     height:20%;
+}
+
+.all_users_list, .following{
+    height:30%;
 }
 
 .unfollow-user{
@@ -60,4 +64,9 @@ h4{
     text-align:center;
     font-size:1.2em;
     font-weight:bold;
+}
+
+.review-body{
+    font-weight:normal;
+    font-style:italic;
 }

@@ -34,7 +34,8 @@ def add_review(request, id_review=None):
     )
     if request.method == "GET":
         form = NewReviewForm(instance=review_instance)
-        return render(request, "blog/add_review.html", locals())
+        context = {'form':form}
+        return render(request, "blog/add_review.html", context)
     elif request.method == "POST":
         form = NewReviewForm(request.POST)
         if form.is_valid():
@@ -80,11 +81,79 @@ def unfollow_user(request, id_user):
 
 def confirm_unfollow(request, id_user):
     followed_user = get_object_or_404(AppUser, id=id_user)
+    relation = UserFollows.objects.filter(
+        user=request.user, followed_user=followed_user
+    )
+    relation.delete()
+    return redirect("/community/")
+
+
+def edit_publications(request):
+    context = {}
+    return render(request, "blog/edit_publications.html", context)
+
+
+def edit_reviews(request):
+    user = request.user
+    user_reviews = user.review_set.all()
+    context = {"user": user, "user_reviews": user_reviews}
+    return render(request, "blog/edit_reviews.html", context)
+
+
+def edit_tickets(request):
+    user = request.user
+    user_tickets = user.ticket_set.all()
+    context = {"user": user, "user_tickets": user_tickets}
+    return render(request, "blog/edit_tickets.html", context)
+
+
+def delete_review(request, id_review):
+    review = get_object_or_404(Review, id=id_review)
+    context = {"review": review}
+    return render(request, "blog/delete_review.html", context)
+
+
+def confirm_delete_review(request, id_review):
+    review = get_object_or_404(Review, id=id_review)
+    review.delete()
+    return redirect("/edit_reviews/")
+
+
+def delete_ticket(request, id_ticket):
+    ticket = get_object_or_404(Ticket, id=id_ticket)
+    context = {"ticket": ticket}
+    return render(request, "blog/delete_ticket.html", context)
+
+
+def confirm_delete_ticket(request, id_ticket):
+    ticket = get_object_or_404(Ticket, id=id_ticket)
+    ticket.delete()
+    return redirect("/edit_tickets/")
+
+
+def edit_ticket(request, id_ticket):
+    instance_ticket = get_object_or_404(Ticket, id=id_ticket)
+    form = NewTicketForm(instance=instance_ticket)
     if request.method == "POST":
-        relation = UserFollows.objects.filter(
-            user=request.user, followed_user=followed_user
-        )
-        relation.delete()
-        return redirect("/community/")
-    context = {"followed_user": followed_user}
-    return render(request, "blog/unfollow_user.html", context)
+        form = NewTicketForm(request.POST, instance=instance_ticket)
+        if form.is_valid():
+            edited_ticket = form.save(commit=False)
+            edited_ticket.user = request.user
+            edited_ticket.save()
+            return redirect("/edit_tickets/")
+    context = {'form': form}
+    return render(request, "blog/edit_ticket.html", context)
+
+
+def edit_review(request, id_review):
+    instance_review = get_object_or_404(Review, id=id_review)
+    form = NewReviewForm(instance=instance_review)
+    if request.method == "POST":
+        form = NewReviewForm(request.POST, instance=instance_review)
+        if form.is_valid():
+            edited_review = form.save(commit=False)
+            edited_review.user = request.user
+            edited_review.save()
+            return redirect("/edit_reviews/")
+    context = {'form': form}
+    return render(request, "blog/edit_review.html", context)

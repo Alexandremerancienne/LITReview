@@ -1,0 +1,27 @@
+{%  extends 'blog/main.html' %}
+{% load static %}
+{% block content %}
+
+<br/>
+
+<div class="row">
+	<div class="col-4"></div>
+	<div class="col-4 delete-warning">
+    	<p>Are you sure you want to delete this ticket ?</p>
+            <div class="ticket-description">
+                {% if ticket.description %}
+                    <p>{{ ticket.title }}</p>
+                    <p>"{{ ticket.description }}"</p>
+                {% else %}
+                    <p>"{{ ticket.title }}"</p>
+                {% endif %}
+            </div>
+            <div class="delete-buttons">
+                <a class="btn btn-warning" href="{% url 'edit_tickets' %}">Cancel</a>
+                <a class="btn btn-danger" href="{% url 'confirm_delete_ticket' ticket.id %}">Confirm</a>
+            </div>
+	</div>
+	<div class="col-4"></div>
+</div>
+
+{% endblock %}

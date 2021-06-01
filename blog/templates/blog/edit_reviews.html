@@ -1,0 +1,20 @@
+{% extends "blog/main.html" %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-4"></div>
+	<div class="col-4 delete-warning">
+    <br/><p><a class="btn btn-primary" href="{% url 'edit_publications' %}">Previous</a></p>
+    <h3>My reviews</h3>
+    {% for review in user_reviews %}
+            <p>{{ review.headline }}
+            <a href="{% url 'edit_review' id_review=review.id %}" class="btn btn-warning" type="submit">Edit</a>
+            <a href="{% url 'delete_review' id_review=review.id %}" class="btn btn-danger" type="submit">Delete</a>
+            </p>
+    {% endfor %}
+	</div>
+	<div class="col-4"></div>
+</div>
+
+{% endblock %}
