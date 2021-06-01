@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import NewTicketForm, NewReviewForm, FollowUserForm, SearchUserForm
+from .forms import NewTicketForm, NewReviewForm, SearchUserForm
 from .models import Ticket, Review, UserFollows
 from accounts.models import AppUser
 
@@ -34,7 +34,7 @@ def add_review(request, id_review=None):
     )
     if request.method == "GET":
         form = NewReviewForm(instance=review_instance)
-        context = {'form':form}
+        context = {"form": form}
         return render(request, "blog/add_review.html", context)
     elif request.method == "POST":
         form = NewReviewForm(request.POST)
@@ -49,7 +49,8 @@ def see_users(request):
     users = AppUser.objects.all().order_by("username")
     users_names = [user.username for user in users]
     relations = UserFollows.objects.filter(user=request.user)
-    relations_users = [relation.followed_user.username for relation in relations]
+    relations_users = [relation.followed_user.username
+                       for relation in relations]
     form = SearchUserForm()
     if request.method == "POST":
         form = SearchUserForm(request.POST)
@@ -141,7 +142,7 @@ def edit_ticket(request, id_ticket):
             edited_ticket.user = request.user
             edited_ticket.save()
             return redirect("/edit_tickets/")
-    context = {'form': form}
+    context = {"form": form}
     return render(request, "blog/edit_ticket.html", context)
 
 
@@ -155,5 +156,5 @@ def edit_review(request, id_review):
             edited_review.user = request.user
             edited_review.save()
             return redirect("/edit_reviews/")
-    context = {'form': form}
+    context = {"form": form}
     return render(request, "blog/edit_review.html", context)
