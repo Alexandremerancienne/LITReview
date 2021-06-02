@@ -3,17 +3,14 @@
 {% block content %}
 
 <br/>
+<br/>
 
-<div class="row">
-	<div class="col-4"></div>
-	<div class="col-4 delete-warning">
+<div class="delete-warning">
 	<p>Are you sure you want to unfollow {{followed_user}} ?</p>
 		<div class="delete-buttons">
 			<a class="btn btn-warning" href="{% url 'see_users' %}">Cancel</a>
 			<a class="btn btn-danger" href="{% url 'confirm_unfollow' followed_user.id %}" type="submit">Confirm</a>
 		</div>
-	</div>
-	<div class="col-4"></div>
 </div>
 
 {% endblock %}
