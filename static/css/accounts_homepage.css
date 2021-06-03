@@ -47,10 +47,10 @@ form{
     position:relative;
     width:60%;
     margin:auto;
-    border:1px solid;
+    border:2px solid;
     padding:10px 10px;
-    margin-bottom:20px;
-    margin-top:20px;
+    margin-bottom:25px;
+    background-color:#FFF5EE;
 }
 
 .main-publication-title{
@@ -70,7 +70,7 @@ form{
     margin:auto;
     border:0.5px solid;
     padding:10px 10px;
-    background-color:#FAF0E6;
+    background-color:#FFDAB9;
 }
 
 .secondary-publication-title{
