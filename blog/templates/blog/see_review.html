@@ -1,0 +1,13 @@
+{% extends "blog/main.html" %}
+
+{% block content %}
+    <div class="review-overview">
+        <br/>
+        <br/>
+        <p><a class="btn btn-primary" href="{% url 'edit_reviews' %}">< Previous</a></p>
+        <div class="review-overview-description">
+            <h2>{{review.headline}}  ({{ review.rating }}/5)</h2>
+            <div class="feedback">{{review.body}}</div>
+        </div>
+    </div>
+{% endblock %}

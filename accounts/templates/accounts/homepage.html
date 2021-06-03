@@ -51,39 +51,154 @@
         <a href="{% url 'add_review' %}" class="btn btn-primary" type="submit">Create review</a>
   </div>
   <br/>
-  {% for review in user_reviews %}
-    <div class="user_review">
-      New review
-      <div class="review_date">
-      {{ review.time_created }}
-      </div>
 
-      <div class="review_title">
-        <b>{{ review.headline }} ({{ review.rating }}/5)</b><br/>
+  {% for post in posts %}
 
-        {% with score=review.rating remaining_points=5|sub:review.rating %}
-            {% with ''|center:score as yellow_stars %}
-              {% for _ in yellow_stars %}
-                  <span class="fa fa-star checked"></span>
-              {% endfor %}
+      {% if post.content_type == "TICKET" %}
+        <div class="main-publication">
+
+          <!-- User's ticket -->
+
+          <p>Your ticket
+          <div class="publication-date">{{ post.time_created }}</div>
+          <div class="main-publication-title">{{post.title}}</div>
+          {% if post.description %}
+            <div class="main-publication-body">"{{ post.description }}"</div></p>
+          {% else %}
+            <div class="main-publication-body">No description</div></p>
+          {% endif %}
+
+          {% for response in responses %}
+                {% if response.ticket.id == post.id %}
+
+                  <!-- Response to user's tickets -->
+
+                  <div class="secondary-publication">
+                    <p>{{ response.user }} posted a review to your ticket:</p>
+                    <div class="secondary-publication-title"><p>{{ response.headline }} ({{ response.rating }}/5)</p>
+                      {% with score=response.rating remaining_points=5|sub:response.rating %}
+
+                          <!-- Yellow Stars added to rating -->
+
+                          {% with ''|center:score as yellow_stars %}
+                            {% for _ in yellow_stars %}
+                                <span class="fa fa-star checked"></span>
+                            {% endfor %}
+                          {% endwith %}
+
+                          <!-- Black Stars added to rating -->
+
+                          {% with ''|center:remaining_points as black_stars %}
+                            {% for _ in black_stars %}
+                              <span class="fa fa-star"></span>
+                            {% endfor %}
+                          {% endwith %}
+
+                      {% endwith %}
+                    </div>
+
+                    {% if response.body %}
+                      <div class="secondary-publication-body"><p>"{{ response.body }}"</p></div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+          {% endfor %}
+
+        </div>
+
+      {% elif post.content_type == "REVIEW" %}
+        <div class="main-publication">
+
+          <!-- Review -->
+
+          <p>Your review</p>
+          <div class="publication-date">{{ post.time_created }}</div>
+
+          <div class="main-publication-title">
+            <p>{{ post.headline }} ({{ post.rating }}/5)<br/>
+
+            {% with score=post.rating remaining_points=5|sub:post.rating %}
+
+                <!-- Yellow Stars added to rating -->
+
+                {% with ''|center:score as yellow_stars %}
+                  {% for _ in yellow_stars %}
+                      <span class="fa fa-star checked"></span>
+                  {% endfor %}
+                {% endwith %}
+
+                <!-- Black Stars added to rating -->
+
+                {% with ''|center:remaining_points as black_stars %}
+                  {% for _ in black_stars %}
+                    <span class="fa fa-star"></span>
+                  {% endfor %}
+                {% endwith %}
+
             {% endwith %}
+          </div>
 
-            {% with ''|center:remaining_points as black_stars %}
-              {% for _ in black_stars %}
-                <span class="fa fa-star"></span>
-              {% endfor %}
-            {% endwith %}
-        {% endwith %}
+            {% if post.body %}
+              <div class="main-publication-body">"{{ post.body }}"</div>
+            {% endif %}</p>
 
-        <br/>
-        {% if review.body %}
-          <div class="review-body">"{{ review.body }}"</div>
-        {% endif %}
+          <!-- Initial ticket the review responds to -->
 
-      </div>
-    </div>
-    <br/>
+          <div class="secondary-publication">
+            Ticket - {{ post.ticket.user }}
+            <div class="publication-date">{{ post.ticket.time_created }}</div>
+            <div class="secondary-publication-title">{{ post.ticket.title }}</div>
+
+            {% if post.ticket.description %}
+              <div class="secondary-publication-body"><p>"{{ post.ticket.description }}"</p></div>
+            {% endif %}
+          </div>
+
+        </div>
+
+      {% elif post.content_type == "UNANSWERED_TICKET" %}
+        <div class="main-publication">
+          {{post.user}} asked for a review:
+          <div class="publication-date">{{ post.time_created }}</div>
+          <div class="main-publication-title">{{post.title}}</div>
+          <div class="main-publication-body">"{{post.description}}"</div>
+          <a class="btn btn-primary" href="" >Create review</a>
+        </div>
+
+      {% elif post.content_type == "ANSWERED_TICKET" %}
+        <div class="main-publication">
+          {{post.user}} asked for a review:
+          <div class="publication-date">{{ post.time_created }}</div>
+          <div class="main-publication-title">{{post.title}}</div>
+          <div class="main-publication-body">"{{post.description}}"</div>
+        </div>
+
+      {% elif post.content_type == "FOLLOWED_REVIEW" %}
+        <div class="main-publication">
+          <p>{{post.user}} posted a new review:
+          <div class="publication-date">{{ post.time_created }}</div>
+          <div class="main-publication-title"><p>{{post.headline}}  ({{ post.rating }}/5)</p></div>
+          {% if post.body %}
+            <div class="main-publication-body">"{{post.body}}"</div>
+          {% endif %}</p>
+
+          <div class="secondary-publication">
+            {% if post.ticket.user == request.user %}
+                <p>Your ticket</p>
+            {% else %}
+              <p>Ticket - {{post.ticket.user}}</p>
+            {% endif %}
+            <div class="publication-date">{{post.time_created}}</div>
+            <div class="secondary-publication-title">{{post.ticket.title}}</div>
+            {% if post.ticket.description %}
+              <div class="secondary-publication-body">"{{post.ticket.description}}"</div>
+            {% endif %}
+          </div>
+
+        </div>
+      {% endif %}
   {% endfor %}
+
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

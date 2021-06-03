@@ -9,7 +9,7 @@
     <h1>My tickets</h1><br/>
     {% for ticket in user_tickets %}
         <div class="my-ticket">
-            {{ ticket.title }}
+            <a href="{% url 'see_ticket' ticket.id %}">{{ ticket.title }}</a>
             <div class="edit-warnings">
                 <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-warning" type="submit">Edit</a>
                 <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger" type="submit">Delete</a>

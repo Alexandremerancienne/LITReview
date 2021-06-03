@@ -1,0 +1,16 @@
+{% extends "blog/main.html" %}
+
+{% block content %}
+    <div class="ticket-overview">
+        <br/>
+        <br/>
+        <p><a class="btn btn-primary" href="{% url 'edit_tickets' %}">< Previous</a></p>
+        <div class="ticket-overview-description">
+            <h2>{{ticket.title}}</h2>
+            <p>{% if ticket.image %}
+                {{ticket.image}}</p>
+            <p>{% endif %}</p>
+            <div class="feedback">{{ticket.description}}</div>
+        </div>
+    </div>
+{% endblock %}

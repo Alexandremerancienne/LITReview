@@ -18,29 +18,67 @@ form{
     font-size:1.2em;
 }
 
-.review_date{
+.checked{
+    color:orange;
+}
+
+.ticket-overview-description,
+.review-overview-description{
+    margin-top:50px;
+    width:70%;
+    text-align:center;
+    margin:auto;
+    border:solid 0.5px;
+}
+
+.ticket-overview-description h2,
+.review-overview-description h2{
+    font-weight:bold;
+    font-size:1.1em;
+}
+
+.publication-date{
     position:absolute;
     right:10px;
     top:10px;
 }
 
-.review_title{
-    margin-top:20px;
-    text-align:center;
-}
-
-.review-body{
-    font-style:italic;
-}
-
-.user_review{
+.main-publication{
     position:relative;
     width:60%;
     margin:auto;
-    border:0.5px groove;
+    border:1px solid;
     padding:10px 10px;
+    margin-bottom:20px;
+    margin-top:20px;
 }
 
-.checked{
-    color:orange;
+.main-publication-title{
+    margin-top:20px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.main-publication-body{
+    font-style:italic;
+    text-align:center;
+}
+
+.secondary-publication{
+    position:relative;
+    width:80%;
+    margin:auto;
+    border:0.5px solid;
+    padding:10px 10px;
+    background-color:#FAF0E6;
+}
+
+.secondary-publication-title{
+    font-weight:bold;
+    text-align:center;
+}
+
+.secondary-publication-body{
+    font-style:italic;
+    text-align:center;
 }

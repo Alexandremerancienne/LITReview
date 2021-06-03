@@ -24,8 +24,9 @@ a{
     text-decoration:underline;
 }
 
-.user_card, .user_card_logout {
-    width: 350px;
+.user_card,
+.user_card_logout,
+.user_card_password_reset{
     margin-bottom: auto;
     background: #80800;
     position: relative;
@@ -42,10 +43,18 @@ a{
 
 .user_card{
     margin-top:100px;
+    width: 350px;
 }
 
 .user_card_logout{
     margin-top:auto;
+    width: 350px;
+}
+
+.user_card_password_reset{
+    margin-top:300px;
+    width: 450px;
+    text-align:center;
 }
 
 .form_container {
@@ -78,4 +87,3 @@ a{
     box-shadow: none !important;
     outline: 0px !important;
 }
-

@@ -84,13 +84,19 @@ h4{
     font-style:italic;
 }
 
-.edit-tickets, .edit-reviews{
+.edit-tickets,
+.edit-reviews,
+.ticket-overview,
+.review-overview{
     width:70%;
     margin:auto;
 }
 
 .edit-tickets .btn-primary,
-.edit-reviews .btn-primary{
+.edit-reviews .btn-primary,
+.ticket-overview .btn-primary,
+.review-overview .btn-primary,
+{
     text-align:left;
 }
 
@@ -102,7 +108,7 @@ h4{
 
 .ticket-description,
 .review-description{
-    width:60%;
+    width:70%;
     margin:auto;
     margin-top:60px;
     border:0.5px solid;

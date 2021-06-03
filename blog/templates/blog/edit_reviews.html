@@ -9,7 +9,7 @@
     <h1>My reviews</h1><br/>
     {% for review in user_reviews %}
         <div class="my-review">
-            {{ review.headline }}
+            <a href="{% url 'see_review' review.id %}">{{ review.headline }}</a>
             <div class="edit-warnings">
                 <a href="{% url 'edit_review' id_review=review.id %}" class="btn btn-warning" type="submit">Edit</a>
                 <a href="{% url 'delete_review' id_review=review.id %}" class="btn btn-danger" type="submit">Delete</a>
