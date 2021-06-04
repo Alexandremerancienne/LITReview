@@ -20,7 +20,7 @@ def add_ticket(request, id_ticket=None):
         context = {"form": form}
         return render(request, "blog/add_ticket.html", context)
     elif request.method == "POST":
-        form = NewTicketForm(request.POST)
+        form = NewTicketForm(request.POST, request.FILES)
         if form.is_valid():
             new_ticket = form.save(commit=False)
             new_ticket.user = request.user
@@ -141,7 +141,7 @@ def edit_ticket(request, id_ticket):
     instance_ticket = get_object_or_404(Ticket, id=id_ticket)
     form = NewTicketForm(instance=instance_ticket)
     if request.method == "POST":
-        form = NewTicketForm(request.POST, instance=instance_ticket)
+        form = NewTicketForm(request.POST, request.FILES, instance=instance_ticket)
         if form.is_valid():
             edited_ticket = form.save(commit=False)
             edited_ticket.user = request.user

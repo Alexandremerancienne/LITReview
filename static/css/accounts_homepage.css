@@ -88,3 +88,11 @@ form{
     font-style:italic;
     text-align:center;
 }
+
+.publication-image{
+    text-align:center;
+}
+
+.publication-cover{
+    height:300px;
+}
