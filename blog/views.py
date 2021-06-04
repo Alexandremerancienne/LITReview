@@ -36,11 +36,13 @@ def add_review(request, id_review=None, id_ticket=None):
         Ticket.objects.get(pk=id_ticket) if id_ticket is not None else None
     )
     if request.method == "GET":
-        form = NewReviewForm(instance=review_instance, initial={'ticket': ticket_instance})
+        form = NewReviewForm(
+            instance=review_instance, initial={"ticket": ticket_instance}
+        )
         context = {"form": form}
         return render(request, "blog/add_review.html", context)
     elif request.method == "POST":
-        form = NewReviewForm(request.POST, initial={'ticket': ticket_instance})
+        form = NewReviewForm(request.POST, initial={"ticket": ticket_instance})
         if form.is_valid():
             new_review = form.save(commit=False)
             new_review.user = request.user
