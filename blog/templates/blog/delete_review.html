@@ -11,14 +11,25 @@
         <a class="btn btn-warning" href="{% url 'edit_reviews' %}">Cancel</a>
         <a class="btn btn-danger" href="{% url 'confirm_delete_review' review.id %}">Confirm</a>
     </div>
-    <div class="review-description">
-        {% if review.body %}
-            <h2>{{ review.headline }}</h2>
-            <p>"{{ review.body }}"</p>
-        {% else %}
-            <p>"{{ review.headline }}"</p>
-        {% endif %}
+</div>
+
+<br/>
+
+<div class="main-publication">
+    <div class="publication-date">{{ review.time_created }}</div>
+    <div class="main-publication-title">{{review.headline}}</div>
+    {% if review.body %}
+        <div class="main-publication-body">"{{ review.body }}"</div></p>
+    {% else %}
+        <div class="main-publication-body">No body</div></p>
+    {% endif %}
+    <div class="publication-image">
+    {% if review.image %}
+      <p><img class="publication-cover" src="{{review.image.url}}"></p><br/>
+    {% endif %}
     </div>
 </div>
+
+
 
 {% endblock %}

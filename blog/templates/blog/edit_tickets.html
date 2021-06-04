@@ -2,21 +2,30 @@
 
 {% block content %}
 
-<div class="edit-tickets">
-    <br/>
-    <br/>
-    <p><a class="btn btn-primary" href="{% url 'edit_publications' %}">< Previous</a></p>
-    <h1>My tickets</h1><br/>
-    {% for ticket in user_tickets %}
-        <div class="my-ticket">
-            <a href="{% url 'see_ticket' ticket.id %}">{{ ticket.title }}</a>
-            <div class="edit-warnings">
-                <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-warning" type="submit">Edit</a>
-                <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger" type="submit">Delete</a>
-            </div>
-        </div>
-    {% endfor %}
+<div class="edit-header">
+    <a class="btn btn-primary" href="{% url 'edit_publications' %}">< Previous</a>
+    <h1>My tickets</h1>
 </div>
 
+{% for ticket in user_tickets %}
+    <div class="main-publication">
+      <div class="publication-date">{{ ticket.time_created }}</div>
+      <div class="main-publication-title">{{ticket.title}}</div>
+      {% if ticket.description %}
+        <div class="main-publication-body">"{{ ticket.description }}"</div></p>
+      {% else %}
+        <div class="main-publication-body">No description</div></p>
+      {% endif %}
+      <div class="publication-image">
+        {% if ticket.image %}
+          <p><img class="publication-cover" src="{{ticket.image.url}}"></p><br/>
+        {% endif %}
+      </div>
+        <div class="edit-warnings">
+            <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-warning" type="submit">Edit</a>
+            <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger" type="submit">Delete</a>
+        </div>
+    </div>
+{% endfor %}
 
 {% endblock %}

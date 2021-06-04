@@ -11,19 +11,25 @@
         <a class="btn btn-warning" href="{% url 'edit_tickets' %}">Cancel</a>
         <a class="btn btn-danger" href="{% url 'confirm_delete_ticket' ticket.id %}">Confirm</a>
     </div>
-    <div class="ticket-description">
-        {% if ticket.description %}
-            <h2>{{ ticket.title }}</h2>
-            <p>"{{ ticket.description }}"</p>
-        {% else %}
-            <p>"{{ ticket.title }}"</p>
-        {% endif %}
-        {% if ticket.image %}
-            {{ ticket.image }}
-        {% endif %}
-    </div>
-
 </div>
+
+<br/>
+
+<div class="main-publication">
+    <div class="publication-date">{{ ticket.time_created }}</div>
+    <div class="main-publication-title">{{ticket.title}}</div>
+    {% if ticket.description %}
+        <div class="main-publication-body">"{{ ticket.description }}"</div></p>
+    {% else %}
+        <div class="main-publication-body">No description</div></p>
+    {% endif %}
+    <div class="publication-image">
+    {% if ticket.image %}
+      <p><img class="publication-cover" src="{{ticket.image.url}}"></p><br/>
+    {% endif %}
+    </div>
+</div>
+
 
 
 {% endblock %}

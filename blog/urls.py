@@ -33,6 +33,4 @@ urlpatterns = [
          name="edit_ticket"),
     path("edit_review/<int:id_review>/", views.edit_review,
          name="edit_review"),
-    path("see_ticket/<int:id_ticket>/", views.see_ticket, name="see_ticket"),
-    path("see_review/<int:id_review>/", views.see_review, name="see_review"),
 ]

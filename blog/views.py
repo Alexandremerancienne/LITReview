@@ -163,15 +163,3 @@ def edit_review(request, id_review):
             return redirect("/edit_reviews/")
     context = {"form": form}
     return render(request, "blog/edit_review.html", context)
-
-
-def see_ticket(request, id_ticket):
-    instance_ticket = get_object_or_404(Ticket, id=id_ticket)
-    context = {"ticket": instance_ticket}
-    return render(request, "blog/see_ticket.html", context)
-
-
-def see_review(request, id_review):
-    instance_review = get_object_or_404(Review, id=id_review)
-    context = {"review": instance_review}
-    return render(request, "blog/see_review.html", context)

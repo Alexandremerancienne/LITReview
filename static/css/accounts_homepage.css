@@ -2,7 +2,7 @@ html, body{
     background-color:#ebeff5;
 }
 
-.reviews-container, .edit-publications{
+.buttons-container{
     width:30%;
     display:flex;
     margin:auto;
@@ -22,31 +22,10 @@ form{
     color:orange;
 }
 
-.ticket-overview-description,
-.review-overview-description{
-    margin-top:50px;
-    width:70%;
-    text-align:center;
-    margin:auto;
-    border:solid 0.5px;
-}
-
-.ticket-overview-description h2,
-.review-overview-description h2{
-    font-weight:bold;
-    font-size:1.1em;
-}
-
 .publication-date{
     position:absolute;
     right:10px;
     top:10px;
-}
-
-.response-to-ticket{
-    position:absolute;
-    right:10px;
-    bottom:10px;
 }
 
 .main-publication{
@@ -95,4 +74,8 @@ form{
 
 .publication-cover{
     height:300px;
+}
+
+.response-to-ticket{
+    text-align:center;
 }

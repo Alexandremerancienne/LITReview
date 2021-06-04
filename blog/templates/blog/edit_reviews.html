@@ -2,20 +2,25 @@
 
 {% block content %}
 
-<div class="edit-reviews">
-    <br/>
-    <br/>
-    <p><a class="btn btn-primary" href="{% url 'edit_publications' %}">< Previous</a></p>
-    <h1>My reviews</h1><br/>
-    {% for review in user_reviews %}
-        <div class="my-review">
-            <a href="{% url 'see_review' review.id %}">{{ review.headline }}</a>
-            <div class="edit-warnings">
-                <a href="{% url 'edit_review' id_review=review.id %}" class="btn btn-warning" type="submit">Edit</a>
-                <a href="{% url 'delete_review' id_review=review.id %}" class="btn btn-danger" type="submit">Delete</a>
-            </div>
-        </div>
-    {% endfor %}
+<div class="edit-header">
+    <a class="btn btn-primary" href="{% url 'edit_publications' %}">< Previous</a>
+    <h1>My reviews</h1>
 </div>
+
+{% for review in user_reviews %}
+    <div class="main-publication">
+      <div class="publication-date">{{ review.time_created }}</div>
+      <div class="main-publication-title">{{review.headline}}</div>
+      {% if review.body %}
+        <div class="main-publication-body">"{{review.body}}"</div></p>
+      {% else %}
+        <div class="main-publication-body">No description</div></p>
+      {% endif %}
+        <div class="edit-warnings">
+            <a href="{% url 'edit_review' review.id %}" class="btn btn-warning" type="submit">Edit</a>
+            <a href="{% url 'delete_review' review.id %}" class="btn btn-danger" type="submit">Delete</a>
+        </div>
+    </div>
+{% endfor %}
 
 {% endblock %}
