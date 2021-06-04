@@ -47,8 +47,8 @@
   <br/>
   <br/>
   <div class="reviews-container">
-        <a href="{% url 'add_ticket' %}" class="btn btn-primary" type="submit">Ask for review</a>
-        <a href="{% url 'add_review' %}" class="btn btn-primary" type="submit">Create review</a>
+        <a href="{% url 'add_ticket' %}" class="btn btn-primary" type="submit">Create Ticket</a>
+        <a href="{% url 'add_review' %}" class="btn btn-primary" type="submit">Create Review</a>
   </div>
   <br/>
 
@@ -170,7 +170,11 @@
           {% else %}
             <div class="main-publication-body">No description</div></p>
           {% endif %}
-          <a class="btn btn-primary" href="" >Unanswered ticket</a>
+          <br/>
+          <br/>
+          <div class="response-to-ticket">
+            <a href="{% url 'add_review' post.id %}" class="btn btn-primary" type="submit">Create Review</a>
+          </div>
         </div>
 
       {% elif post.content_type == "ANSWERED_TICKET" %}

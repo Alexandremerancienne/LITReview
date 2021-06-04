@@ -28,16 +28,19 @@ def add_ticket(request, id_ticket=None):
             return redirect("/")
 
 
-def add_review(request, id_review=None):
+def add_review(request, id_review=None, id_ticket=None):
     review_instance = (
         Review.objects.get(pk=id_review) if id_review is not None else None
     )
+    ticket_instance = (
+        Ticket.objects.get(pk=id_ticket) if id_ticket is not None else None
+    )
     if request.method == "GET":
-        form = NewReviewForm(instance=review_instance)
+        form = NewReviewForm(instance=review_instance, initial={'ticket': ticket_instance})
         context = {"form": form}
         return render(request, "blog/add_review.html", context)
     elif request.method == "POST":
-        form = NewReviewForm(request.POST)
+        form = NewReviewForm(request.POST, initial={'ticket': ticket_instance})
         if form.is_valid():
             new_review = form.save(commit=False)
             new_review.user = request.user

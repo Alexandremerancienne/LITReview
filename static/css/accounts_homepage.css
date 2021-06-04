@@ -43,6 +43,12 @@ form{
     top:10px;
 }
 
+.response-to-ticket{
+    position:absolute;
+    right:10px;
+    bottom:10px;
+}
+
 .main-publication{
     position:relative;
     width:60%;
