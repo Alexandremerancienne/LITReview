@@ -39,6 +39,9 @@
                 <a class="nav-link" href="{% url 'logout' %}">Log out</a>
               </li>
             </ul>
+            <div class="session-user">
+              {{request.user}}
+            </div>
           </div>
         </nav>
       </div>

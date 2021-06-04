@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-4"></div>
             <div class="col-4">
-                <h4>Following</h4>
+                <h4>Following</h4><br/>
                 <div class="unfollow-users">
                     {% for relation in new_relations %}
                         <div class="unfollow-user">
@@ -34,7 +34,8 @@
     </div>
 
     <div class="all_users_list">
-        <h4>Users</h4>
+        <br/>
+        <h4>Users</h4><br/>
         {% for user in users %}
             <div class="users-list">{{ user }}</div>
         {% endfor %}

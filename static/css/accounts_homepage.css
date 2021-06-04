@@ -9,6 +9,13 @@ html, body{
     justify-content:space-between;
 }
 
+.session-user{
+    width:35%;
+    color:white;
+    text-align:right;
+    font-size:1.3em;
+}
+
 form{
     margin:auto;
 }
