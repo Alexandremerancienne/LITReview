@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import NewTicketForm, NewReviewForm, SearchUserForm
 from .models import Ticket, Review, UserFollows
 from accounts.models import AppUser
+from itertools import chain
 
 # Create your views here.
 
@@ -97,7 +98,24 @@ def confirm_unfollow(request, id_user):
 
 
 def edit_publications(request):
-    context = {}
+    user = request.user
+    user_reviews = user.review_set.all()
+    user_tickets = user.ticket_set.all()
+    user_publications = chain(user_reviews, user_tickets)
+    user_reviews_tickets = [review.ticket for review in user_reviews]
+    answered_tickets = [
+        ticket for ticket in user_tickets
+        if ticket in user_reviews_tickets
+    ]
+    uncommented_user_tickets = user_tickets.exclude(title__in=answered_tickets)
+    commented_user_tickets = user_tickets.filter(title__in=answered_tickets)
+    ordered_publications = sorted(user_publications,
+                                  key=operator.attrgetter('time_created'),
+                                  reverse=True)
+    context = {"user": user, "user_publications": ordered_publications,
+               "user_tickets": user_tickets, "user_reviews": user_reviews,
+               "uncommented_tickets": uncommented_user_tickets,
+               "commented_tickets": commented_user_tickets}
     return render(request, "blog/edit_publications.html", context)
 
 

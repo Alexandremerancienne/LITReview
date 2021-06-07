@@ -25,6 +25,7 @@ a{
 }
 
 .user_card,
+.user_card_register,
 .user_card_logout,
 .user_card_password_reset{
     margin-bottom: auto;
@@ -46,7 +47,8 @@ a{
     width: 350px;
 }
 
-.user_card_logout{
+.user_card_logout,
+.user_card_register{
     margin-top:auto;
     width: 350px;
 }
