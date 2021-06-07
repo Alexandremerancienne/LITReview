@@ -104,7 +104,9 @@ def edit_publications(request):
 def edit_reviews(request):
     user = request.user
     user_reviews = user.review_set.all()
-    ordered_reviews = sorted(user_reviews, key=operator.attrgetter('time_created'), reverse=True)
+    ordered_reviews = sorted(user_reviews,
+                             key=operator.attrgetter('time_created'),
+                             reverse=True)
     context = {"user": user, "user_reviews": ordered_reviews}
     return render(request, "blog/edit_reviews.html", context)
 
@@ -112,8 +114,20 @@ def edit_reviews(request):
 def edit_tickets(request):
     user = request.user
     user_tickets = user.ticket_set.all()
-    ordered_tickets = sorted(user_tickets, key=operator.attrgetter('time_created'), reverse=True)
-    context = {"user": user, "user_tickets": ordered_tickets}
+    user_reviews = user.review_set.all()
+    user_reviews_tickets = [review.ticket for review in user_reviews]
+    answered_tickets = [
+        ticket for ticket in user_tickets
+        if ticket in user_reviews_tickets
+    ]
+    uncommented_user_tickets = user_tickets.exclude(title__in=answered_tickets)
+    commented_user_tickets = user_tickets.filter(title__in=answered_tickets)
+    ordered_tickets = sorted(user_tickets,
+                             key=operator.attrgetter('time_created'),
+                             reverse=True)
+    context = {"user": user, "user_tickets": ordered_tickets,
+               "uncommented_tickets": uncommented_user_tickets,
+               "commented_tickets": commented_user_tickets}
     return render(request, "blog/edit_tickets.html", context)
 
 
@@ -145,7 +159,8 @@ def edit_ticket(request, id_ticket):
     instance_ticket = get_object_or_404(Ticket, id=id_ticket)
     form = NewTicketForm(instance=instance_ticket)
     if request.method == "POST":
-        form = NewTicketForm(request.POST, request.FILES, instance=instance_ticket)
+        form = NewTicketForm(request.POST, request.FILES,
+                             instance=instance_ticket)
         if form.is_valid():
             edited_ticket = form.save(commit=False)
             edited_ticket.user = request.user

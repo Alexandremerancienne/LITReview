@@ -21,11 +21,19 @@
           <p><img class="publication-cover" src="{{ticket.image.url}}"></p><br/>
         {% endif %}
       </div>
-        <div class="edit-warnings">
-            <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-warning" type="submit">Edit</a>
-            <a href="{% url 'add_review' ticket.id %}" class="btn btn-primary" type="submit">Create Review</a>
-            <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger" type="submit">Delete</a>
-        </div>
+        {% if ticket in commented_tickets %}
+            <div class="edit-warnings">
+                <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-warning" type="submit">Edit</a>
+                <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger" type="submit">Delete</a>
+            </div>
+        {% elif ticket in uncommented_tickets %}
+            <div class="edit-warnings">
+                <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-warning" type="submit">Edit</a>
+                <a href="{% url 'add_review' ticket.id %}" class="btn btn-primary" type="submit">Create Review</a>
+                <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger" type="submit">Delete</a>
+            </div>
+        {% endif %}
+
     </div>
 {% endfor %}
 

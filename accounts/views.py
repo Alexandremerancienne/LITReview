@@ -47,8 +47,6 @@ def homepage(request):
     new_user_tickets = user_tickets.exclude(title__in=user_unanswered)
     tickets = new_user_tickets.annotate(content_type=Value("TICKET",
                                                            CharField()))
-
-
     user_reviews_tickets = [review.ticket for review in user_reviews]
     answered_tickets = [
         ticket for ticket in followed_tickets
@@ -58,11 +56,6 @@ def homepage(request):
     answered = followed_answered.annotate(
         content_type=Value("ANSWERED_TICKET", CharField())
     )
-
-
-
-
-
     followed_users_reviews = Review.objects.filter(user__in=followed_users)
     followed_reviews = followed_users_reviews.annotate(
         content_type=Value("FOLLOWED_REVIEW", CharField())
