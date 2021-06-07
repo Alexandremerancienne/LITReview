@@ -1,0 +1,52 @@
+{% load mathfilters %}
+
+<div class="main-publication">
+  <p>{{post.user}} posted a new review:
+  <div class="publication-date">{{ post.time_created }}</div>
+  <div class="main-publication-title">
+    <p>{{ post.headline }} ({{ post.rating }}/5)<br/>
+
+    {% with score=post.rating remaining_points=5|sub:post.rating %}
+
+        <!-- Yellow Stars added to rating -->
+
+        {% with ''|center:score as yellow_stars %}
+          {% for _ in yellow_stars %}
+              <span class="fa fa-star checked"></span>
+          {% endfor %}
+        {% endwith %}
+
+        <!-- Black Stars added to rating -->
+
+        {% with ''|center:remaining_points as black_stars %}
+          {% for _ in black_stars %}
+            <span class="fa fa-star"></span>
+          {% endfor %}
+        {% endwith %}
+
+    {% endwith %}
+  </div>
+
+  {% if post.body %}
+    <div class="main-publication-body">"{{post.body}}"</div>
+  {% endif %}</p>
+
+  <div class="secondary-publication">
+    {% if post.ticket.user == request.user %}
+        <p>Your ticket</p>
+    {% else %}
+      <p>Ticket - {{post.ticket.user}}</p>
+    {% endif %}
+    <div class="publication-date">{{post.time_created}}</div>
+    <div class="secondary-publication-title">{{post.ticket.title}}</div>
+    {% if post.ticket.description %}
+      <p><div class="secondary-publication-body">"{{post.ticket.description}}"</div></p>
+    {% endif %}
+    <div class="publication-image">
+      {% if post.ticket.image %}
+        <p><img class="publication-cover" src="{{post.ticket.image.url}}"></p><br/>
+      {% endif %}
+  </div>
+  </div>
+
+</div>

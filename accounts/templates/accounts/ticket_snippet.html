@@ -1,0 +1,57 @@
+{% load mathfilters %}
+
+<div class="main-publication">
+
+  <!-- User's ticket -->
+
+  <p>Your ticket
+  <div class="publication-date">{{ post.time_created }}</div>
+  <div class="main-publication-title">{{post.title}}</div>
+  {% if post.description %}
+    <div class="main-publication-body">"{{ post.description }}"</div></p>
+  {% else %}
+    <div class="main-publication-body">No description</div></p>
+  {% endif %}
+  <div class="publication-image">
+    {% if post.image %}
+      <p><img class="publication-cover" src="{{post.image.url}}"></p><br/>
+    {% endif %}
+  </div>
+
+  {% for response in responses %}
+    {% if response.ticket.id == post.id %}
+
+      <!-- Response to user's tickets -->
+
+      <div class="secondary-publication">
+        <p>{{ response.user }} posted a review to your ticket:</p>
+        <div class="secondary-publication-title"><p>{{ response.headline }} ({{ response.rating }}/5)</p>
+          {% with score=response.rating remaining_points=5|sub:response.rating %}
+
+              <!-- Yellow Stars added to rating -->
+
+              {% with ''|center:score as yellow_stars %}
+                {% for _ in yellow_stars %}
+                    <span class="fa fa-star checked"></span>
+                {% endfor %}
+              {% endwith %}
+
+              <!-- Black Stars added to rating -->
+
+              {% with ''|center:remaining_points as black_stars %}
+                {% for _ in black_stars %}
+                  <span class="fa fa-star"></span>
+                {% endfor %}
+              {% endwith %}
+
+          {% endwith %}
+        </div>
+
+        {% if response.body %}
+          <div class="secondary-publication-body"><p>"{{ response.body }}"</p></div>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+
+</div>

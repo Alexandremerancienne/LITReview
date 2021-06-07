@@ -12,9 +12,9 @@
       <div class="publication-date">{{ ticket.time_created }}</div>
       <div class="main-publication-title">{{ticket.title}}</div>
       {% if ticket.description %}
-        <div class="main-publication-body">"{{ ticket.description }}"</div></p>
+        <p><div class="main-publication-body">"{{ ticket.description }}"</div></p>
       {% else %}
-        <div class="main-publication-body">No description</div></p>
+        <p><div class="main-publication-body">No description</div></p>
       {% endif %}
       <div class="publication-image">
         {% if ticket.image %}
@@ -23,6 +23,7 @@
       </div>
         <div class="edit-warnings">
             <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-warning" type="submit">Edit</a>
+            <a href="{% url 'add_review' ticket.id %}" class="btn btn-primary" type="submit">Create Review</a>
             <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger" type="submit">Delete</a>
         </div>
     </div>

@@ -1,0 +1,22 @@
+<div class="main-publication">
+  {% if post.user == request.user %}
+    Your ticket:
+  {% else %}
+    {{post.user}} asked for a review:
+  {% endif %}
+  <div class="publication-date">{{ post.time_created }}</div>
+  <div class="main-publication-title">{{post.title}}</div>
+  {% if post.description %}
+    <div class="main-publication-body">"{{ post.description }}"</div></p>
+  {% else %}
+    <div class="main-publication-body">No description</div></p>
+  {% endif %}
+  <div class="publication-image">
+    {% if post.image %}
+      <p><img class="publication-cover" src="{{post.image.url}}"></p><br/>
+    {% endif %}
+  </div>
+  <div class="response-to-ticket">
+    <a href="{% url 'add_review' post.id %}" class="btn btn-primary" type="submit">Create Review</a>
+  </div>
+</div>

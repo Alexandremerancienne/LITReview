@@ -1,0 +1,15 @@
+<div class="main-publication">
+  {{post.user}} asked for a review:
+  <div class="publication-date">{{ post.time_created }}</div>
+  <div class="main-publication-title">{{post.title}}</div>
+  {% if post.description %}
+    <div class="main-publication-body">"{{ post.description }}"</div></p>
+  {% else %}
+    <div class="main-publication-body">No description</div></p>
+  {% endif %}
+  <div class="publication-image">
+    {% if post.image %}
+      <p><img class="publication-cover" src="{{post.image.url}}"></p><br/>
+    {% endif %}
+  </div>
+</div>
