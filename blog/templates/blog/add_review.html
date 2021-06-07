@@ -3,6 +3,13 @@
 
 {% block content %}
     <br/>
+    <div class="answer-to-ticket">You are answering to the following ticket:</div>
+    <br/>
+
+        {% with post=ticket %}
+            {% include "blog/ticket_snippet.html" %}
+        {% endwith %}
+    <br/>
     <form method="POST" action="{% url 'add_review' %}">
         {% csrf_token %}
         {% for field in form %}

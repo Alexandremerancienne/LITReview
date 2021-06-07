@@ -65,7 +65,11 @@ h4{
 }
 
 .edit-warnings{
+    width:40%;
+    margin:auto;
     text-align:center;
+    display:flex;
+    justify-content:space-between;
 }
 
 .edit-header{
@@ -96,4 +100,10 @@ h4{
 
 .form-check-label{
     margin-left:30px;
+}
+
+.answer-to-ticket{
+    width:60%;
+    margin:auto;
+    font-size:1em;
 }

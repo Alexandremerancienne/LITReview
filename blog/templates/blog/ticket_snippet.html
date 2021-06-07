@@ -1,0 +1,32 @@
+<div class="main-publication">
+  {% if post.user == request.user %}
+      <p>Your ticket</p>
+  {% else %}
+      Ticket - {{post.user}}
+  {% endif %}
+  <div class="publication-date">{{ post.time_created }}</div>
+  <div class="main-publication-title">{{post.title}}</div>
+  {% if post.description %}
+    <p><div class="main-publication-body">"{{ post.description }}"</div></p>
+  {% else %}
+    <p><div class="main-publication-body">No description</div></p>
+  {% endif %}
+  <div class="publication-image">
+    {% if post.image %}
+      <p><img class="publication-cover" src="{{post.image.url}}"></p><br/>
+    {% endif %}
+  </div>
+    {% if post in commented_tickets %}
+        <div class="edit-warnings">
+            <a href="{% url 'edit_ticket' post.id %}" class="btn btn-warning" type="submit">Edit</a>
+            <a href="{% url 'delete_ticket' post.id %}" class="btn btn-danger" type="submit">Delete</a>
+        </div>
+    {% elif post in uncommented_tickets %}
+        <div class="edit-warnings">
+            <a href="{% url 'edit_ticket' post.id %}" class="btn btn-warning" type="submit">Edit</a>
+            <a href="{% url 'add_review' post.id %}" class="btn btn-primary" type="submit">Create Review</a>
+            <a href="{% url 'delete_ticket' post.id %}" class="btn btn-danger" type="submit">Delete</a>
+        </div>
+    {% endif %}
+
+</div>

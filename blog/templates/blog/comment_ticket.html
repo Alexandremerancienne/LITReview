@@ -1,0 +1,13 @@
+{% extends "blog/main.html" %}
+
+{% block content %}
+
+<br/>
+
+{% for post in unanswered_tickets %}
+    {% include "accounts/unanswered_ticket_snippet.html" %}
+{% endfor %}
+
+{% endblock %}
+
+

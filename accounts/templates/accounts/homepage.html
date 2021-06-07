@@ -30,7 +30,7 @@
                 <a class="nav-link" href="{% url 'homepage' %}">Flux</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'edit_publications' %}">Posts</a>
+                <a class="nav-link" href="{% url 'edit_posts' %}">Posts</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'see_users' %}">Community</a>
@@ -51,14 +51,14 @@
   <br/>
   <div class="buttons-container">
         <a href="{% url 'add_ticket' %}" class="btn btn-primary" type="submit">Create Ticket</a>
-        <a href="{% url 'add_review' %}" class="btn btn-primary" type="submit">Create Review</a>
+        <a href="{% url 'choose_review' %}" class="btn btn-primary" type="submit">Create Review</a>
   </div>
   <br/>
 
   {% for post in posts %}
 
       {% if post.content_type == "TICKET" %}
-        {% include "accounts/ticket_snippet.html" %}
+          {% include "accounts/ticket_snippet.html" %}
 
       {% elif post.content_type == "REVIEW" %}
         {% include "accounts/review_snippet.html" %}

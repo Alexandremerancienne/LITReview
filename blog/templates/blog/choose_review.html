@@ -1,0 +1,13 @@
+{% extends "blog/main.html" %}
+
+{% block content %}
+
+<br/>
+<br/>
+<div class="buttons-container">
+	<a class="btn btn-primary" href="{% url 'create_review' %}">New Review</a>
+	<a class="btn btn-primary" href="{% url 'comment_ticket' %}">Reply to Ticket</a>
+</div>
+<br/>
+
+{% endblock %}

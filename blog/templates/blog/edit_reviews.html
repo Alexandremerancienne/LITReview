@@ -3,29 +3,12 @@
 {% block content %}
 
 <div class="edit-header">
-    <a class="btn btn-primary" href="{% url 'edit_publications' %}">< Previous</a>
+    <a class="btn btn-primary" href="{% url 'edit_posts' %}">< Previous</a>
     <h1>My reviews</h1>
 </div>
 
-{% for review in user_reviews %}
-    <div class="main-publication">
-      <div class="publication-date">{{ review.time_created }}</div>
-      <p><div class="main-publication-title">{{review.headline}}</div></p>
-      <div class="publication-image">
-        {% if review.ticket.image %}
-          <p><img class="publication-cover" src="{{review.ticket.image.url}}"></p>
-        {% endif %}
-      </div>
-      {% if review.body %}
-        <div class="main-publication-body">"{{ review.body }}"</div></p>
-      {% else %}
-        <div class="main-publication-body">No description</div></p>
-      {% endif %}
-        <div class="edit-warnings">
-            <a href="{% url 'edit_review' review.id %}" class="btn btn-warning" type="submit">Edit</a>
-            <a href="{% url 'delete_review' review.id %}" class="btn btn-danger" type="submit">Delete</a>
-        </div>
-    </div>
+{% for post in user_reviews %}
+    {% include "blog/review_snippet.html" %}
 {% endfor %}
 
 {% endblock %}

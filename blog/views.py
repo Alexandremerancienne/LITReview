@@ -5,6 +5,8 @@ from .forms import NewTicketForm, NewReviewForm, SearchUserForm
 from .models import Ticket, Review, UserFollows
 from accounts.models import AppUser
 from itertools import chain
+from django.db.models import CharField, Value
+from django.forms import modelformset_factory
 
 # Create your views here.
 
@@ -31,6 +33,11 @@ def add_ticket(request, id_ticket=None):
             return redirect("/")
 
 
+def choose_review(request):
+    context={}
+    return render(request, "blog/choose_review.html", context)
+
+
 def add_review(request, id_review=None, id_ticket=None):
     review_instance = (
         Review.objects.get(pk=id_review) if id_review is not None else None
@@ -42,7 +49,7 @@ def add_review(request, id_review=None, id_ticket=None):
         form = NewReviewForm(
             instance=review_instance, initial={"ticket": ticket_instance}
         )
-        context = {"form": form}
+        context = {"form": form, "ticket":ticket_instance}
         return render(request, "blog/add_review.html", context)
     elif request.method == "POST":
         form = NewReviewForm(request.POST, initial={"ticket": ticket_instance})
@@ -97,11 +104,11 @@ def confirm_unfollow(request, id_user):
     return redirect("/community/")
 
 
-def edit_publications(request):
+def edit_posts(request):
     user = request.user
     user_reviews = user.review_set.all()
     user_tickets = user.ticket_set.all()
-    user_publications = chain(user_reviews, user_tickets)
+    user_posts = chain(user_reviews, user_tickets)
     user_reviews_tickets = [review.ticket for review in user_reviews]
     answered_tickets = [
         ticket for ticket in user_tickets
@@ -109,14 +116,14 @@ def edit_publications(request):
     ]
     uncommented_user_tickets = user_tickets.exclude(title__in=answered_tickets)
     commented_user_tickets = user_tickets.filter(title__in=answered_tickets)
-    ordered_publications = sorted(user_publications,
+    ordered_publications = sorted(user_posts,
                                   key=operator.attrgetter('time_created'),
                                   reverse=True)
-    context = {"user": user, "user_publications": ordered_publications,
+    context = {"user": user, "user_posts": ordered_publications,
                "user_tickets": user_tickets, "user_reviews": user_reviews,
                "uncommented_tickets": uncommented_user_tickets,
                "commented_tickets": commented_user_tickets}
-    return render(request, "blog/edit_publications.html", context)
+    return render(request, "blog/edit_posts.html", context)
 
 
 def edit_reviews(request):
@@ -198,5 +205,41 @@ def edit_review(request, id_review):
             edited_review.user = request.user
             edited_review.save()
             return redirect("/edit_reviews/")
-    context = {"form": form}
+    context = {"form": form, "review":instance_review}
     return render(request, "blog/edit_review.html", context)
+
+
+def comment_ticket(request):
+    user = request.user
+    user_tickets = user.ticket_set.all()
+    followed_users = [
+        relation.followed_user
+        for relation in UserFollows.objects.filter(user=request.user)
+    ]
+    followed_tickets = [
+        ticket for ticket in Ticket.objects.filter(user__in=followed_users)
+    ]
+    reviews_tickets = [review.ticket for review in Review.objects.all()]
+    user_unanswered = [
+        ticket for ticket in user_tickets if ticket not in reviews_tickets
+    ]
+    unanswered_followed = [
+        ticket for ticket in followed_tickets
+        if ticket not in reviews_tickets
+    ]
+    unanswered_followed.extend(user_unanswered)
+    unanswered_followed_tickets = Ticket.objects.filter(
+        title__in=unanswered_followed
+    )
+    unanswered = unanswered_followed_tickets.annotate(content_type=
+                                                      Value("UNANSWERED_TICKET",
+                                                            CharField()))
+    posts = sorted(unanswered, key=lambda post: post.time_created,
+                   reverse=True)
+    context = {"unanswered_tickets": posts}
+    return render(request, "blog/comment_ticket.html", context)
+
+
+def create_review(request):
+    context={}
+    return render(request, "blog/create_review.html", context)

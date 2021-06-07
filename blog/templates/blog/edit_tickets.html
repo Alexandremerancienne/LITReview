@@ -3,38 +3,12 @@
 {% block content %}
 
 <div class="edit-header">
-    <a class="btn btn-primary" href="{% url 'edit_publications' %}">< Previous</a>
+    <a class="btn btn-primary" href="{% url 'edit_posts' %}">< Previous</a>
     <h1>My tickets</h1>
 </div>
 
-{% for ticket in user_tickets %}
-    <div class="main-publication">
-      <div class="publication-date">{{ ticket.time_created }}</div>
-      <div class="main-publication-title">{{ticket.title}}</div>
-      {% if ticket.description %}
-        <p><div class="main-publication-body">"{{ ticket.description }}"</div></p>
-      {% else %}
-        <p><div class="main-publication-body">No description</div></p>
-      {% endif %}
-      <div class="publication-image">
-        {% if ticket.image %}
-          <p><img class="publication-cover" src="{{ticket.image.url}}"></p><br/>
-        {% endif %}
-      </div>
-        {% if ticket in commented_tickets %}
-            <div class="edit-warnings">
-                <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-warning" type="submit">Edit</a>
-                <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger" type="submit">Delete</a>
-            </div>
-        {% elif ticket in uncommented_tickets %}
-            <div class="edit-warnings">
-                <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-warning" type="submit">Edit</a>
-                <a href="{% url 'add_review' ticket.id %}" class="btn btn-primary" type="submit">Create Review</a>
-                <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger" type="submit">Delete</a>
-            </div>
-        {% endif %}
-
-    </div>
+{% for post in user_tickets %}
+    {% include "blog/ticket_snippet.html" %}
 {% endfor %}
 
 {% endblock %}

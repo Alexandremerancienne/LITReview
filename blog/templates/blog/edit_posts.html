@@ -1,0 +1,25 @@
+{% extends "blog/main.html" %}
+{% load mathfilters %}
+
+{% block content %}
+
+<br/>
+<br/>
+<div class="buttons-container">
+	<a class="btn btn-primary" href="{% url 'edit_tickets' %}">My Tickets</a>
+	<a class="btn btn-primary" href="{% url 'edit_reviews' %}">My Reviews</a>
+</div>
+<br/>
+
+{% for post in user_posts %}
+
+    {% if post in user_reviews %}
+        {% include "blog/review_snippet.html" %}
+
+    {% elif post in user_tickets%}
+        {% include "blog/ticket_snippet.html" %}
+    {% endif %}
+
+{% endfor %}
+
+{% endblock %}
