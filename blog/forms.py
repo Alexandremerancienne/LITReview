@@ -36,4 +36,3 @@ class FollowUserForm(ModelForm):
 
 class SearchUserForm(forms.Form):
     user_name = forms.CharField(label="Search User", max_length=100)
-

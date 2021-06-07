@@ -6,7 +6,6 @@ from .models import Ticket, Review, UserFollows
 from accounts.models import AppUser
 from itertools import chain
 from django.db.models import CharField, Value
-from django.forms import modelformset_factory
 
 # Create your views here.
 
@@ -34,7 +33,7 @@ def add_ticket(request, id_ticket=None):
 
 
 def choose_review(request):
-    context={}
+    context = {}
     return render(request, "blog/choose_review.html", context)
 
 
@@ -49,7 +48,7 @@ def add_review(request, id_review=None, id_ticket=None):
         form = NewReviewForm(
             instance=review_instance, initial={"ticket": ticket_instance}
         )
-        context = {"form": form, "ticket":ticket_instance}
+        context = {"form": form, "ticket": ticket_instance}
         return render(request, "blog/add_review.html", context)
     elif request.method == "POST":
         form = NewReviewForm(request.POST, initial={"ticket": ticket_instance})
@@ -205,7 +204,7 @@ def edit_review(request, id_review):
             edited_review.user = request.user
             edited_review.save()
             return redirect("/edit_reviews/")
-    context = {"form": form, "review":instance_review}
+    context = {"form": form, "review": instance_review}
     return render(request, "blog/edit_review.html", context)
 
 
@@ -231,9 +230,8 @@ def comment_ticket(request):
     unanswered_followed_tickets = Ticket.objects.filter(
         title__in=unanswered_followed
     )
-    unanswered = unanswered_followed_tickets.annotate(content_type=
-                                                      Value("UNANSWERED_TICKET",
-                                                            CharField()))
+    unanswered = unanswered_followed_tickets.annotate(
+        content_type=Value("UNANSWERED_TICKET", CharField()))
     posts = sorted(unanswered, key=lambda post: post.time_created,
                    reverse=True)
     context = {"unanswered_tickets": posts}
@@ -241,5 +239,5 @@ def comment_ticket(request):
 
 
 def create_review(request):
-    context={}
+    context = {}
     return render(request, "blog/create_review.html", context)
