@@ -1,3 +1,5 @@
+import operator
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import NewTicketForm, NewReviewForm, SearchUserForm
 from .models import Ticket, Review, UserFollows
@@ -102,14 +104,16 @@ def edit_publications(request):
 def edit_reviews(request):
     user = request.user
     user_reviews = user.review_set.all()
-    context = {"user": user, "user_reviews": user_reviews}
+    ordered_reviews = sorted(user_reviews, key=operator.attrgetter('time_created'), reverse=True)
+    context = {"user": user, "user_reviews": ordered_reviews}
     return render(request, "blog/edit_reviews.html", context)
 
 
 def edit_tickets(request):
     user = request.user
     user_tickets = user.ticket_set.all()
-    context = {"user": user, "user_tickets": user_tickets}
+    ordered_tickets = sorted(user_tickets, key=operator.attrgetter('time_created'), reverse=True)
+    context = {"user": user, "user_tickets": ordered_tickets}
     return render(request, "blog/edit_tickets.html", context)
 
 
