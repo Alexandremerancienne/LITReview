@@ -32,7 +32,7 @@ Users can ask for reviews or post reviews in response to tickets published by fo
 
   * Once the database is configurated, migrate your data: `python manage.py migrate`
 
-## Populate database (optional step, only to test application with fixtures)
+## Populate database (optional)
 
 If you want to test directly the application without creating users, reviews... you can import fixtures as follows:
 
