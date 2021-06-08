@@ -37,7 +37,7 @@ Users can ask for reviews or post reviews in response to tickets published by fo
 If you want to test directly the application without creating users, reviews... you can import fixtures as follows:
 
 * Import users: `python manage.py loaddata litreviewusers.json`
-* Import posts: `python manage.py loaddata litreviewusers.json`
+* Import posts: `python manage.py loaddata litreviewblog.json`
 
 ## Create a superuser 
 
