@@ -278,8 +278,19 @@ def create_review(request, id_review=None, id_ticket=None):
             new_ticket = ticket_form.save(commit=False)
             new_ticket.user = request.user
             new_ticket.save()
-            review_form = NewReviewForm(request.POST, initial={"ticket": new_ticket.id})
+
+
+
+            review_form = NewReviewForm(request.POST)
+
+
+
+
+
+            review_form.ticket = new_ticket
             print(review_form)
-            return redirect("/")
-
-
+            if review_form.is_valid():
+                new_review = review_form.save(commit=False)
+                new_review.user = request.user
+                new_review.save()
+                return redirect("/")
