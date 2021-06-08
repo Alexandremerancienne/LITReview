@@ -3,16 +3,16 @@
 
 {% block content %}
     <br/>
-    <form method="POST">
+    <form method="POST" action="{% url 'create_review' %}">
         {% csrf_token %}
         {% for field in ticket_form %}
             {{field|as_crispy_field}}
-            <hr>
         {% endfor %}
-
+        <hr/>
         {% for field in review_form %}
-            {{field|as_crispy_field}}
-            <hr>
+            {% if field.name != "ticket" %}
+                {{field|as_crispy_field}}
+            {% endif %}
         {% endfor %}
         <input class="btn btn-primary" type="submit" value="Send" />
     </form>

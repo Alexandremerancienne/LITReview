@@ -1,5 +1,6 @@
 import operator
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import NewTicketForm, NewReviewForm, SearchUserForm
 from .models import Ticket, Review, UserFollows
@@ -7,14 +8,16 @@ from accounts.models import AppUser
 from itertools import chain
 from django.db.models import CharField, Value
 
+
 # Create your views here.
 
-
+@login_required
 def main(request):
     context = {}
     return render(request, "blog/main.html", context)
 
 
+@login_required
 def add_ticket(request, id_ticket=None):
     ticket_instance = (
         Ticket.objects.get(pk=id_ticket) if id_ticket is not None else None
@@ -32,11 +35,13 @@ def add_ticket(request, id_ticket=None):
             return redirect("/")
 
 
+@login_required
 def choose_review(request):
     context = {}
     return render(request, "blog/choose_review.html", context)
 
 
+@login_required
 def add_review(request, id_review=None, id_ticket=None):
     review_instance = (
         Review.objects.get(pk=id_review) if id_review is not None else None
@@ -59,6 +64,7 @@ def add_review(request, id_review=None, id_ticket=None):
             return redirect("/")
 
 
+@login_required
 def see_users(request):
     users = AppUser.objects.all().order_by("username")
     users_names = [user.username for user in users]
@@ -88,12 +94,14 @@ def see_users(request):
     return render(request, "blog/community.html", context)
 
 
+@login_required
 def unfollow_user(request, id_user):
     followed_user = get_object_or_404(AppUser, id=id_user)
     context = {"followed_user": followed_user}
     return render(request, "blog/unfollow_user.html", context)
 
 
+@login_required
 def confirm_unfollow(request, id_user):
     followed_user = get_object_or_404(AppUser, id=id_user)
     relation = UserFollows.objects.filter(
@@ -103,6 +111,7 @@ def confirm_unfollow(request, id_user):
     return redirect("/community/")
 
 
+@login_required
 def edit_posts(request):
     user = request.user
     user_reviews = user.review_set.all()
@@ -125,6 +134,7 @@ def edit_posts(request):
     return render(request, "blog/edit_posts.html", context)
 
 
+@login_required
 def edit_reviews(request):
     user = request.user
     user_reviews = user.review_set.all()
@@ -135,6 +145,7 @@ def edit_reviews(request):
     return render(request, "blog/edit_reviews.html", context)
 
 
+@login_required
 def edit_tickets(request):
     user = request.user
     user_tickets = user.ticket_set.all()
@@ -155,30 +166,35 @@ def edit_tickets(request):
     return render(request, "blog/edit_tickets.html", context)
 
 
+@login_required
 def delete_review(request, id_review):
     review = get_object_or_404(Review, id=id_review)
     context = {"review": review}
     return render(request, "blog/delete_review.html", context)
 
 
+@login_required
 def confirm_delete_review(request, id_review):
     review = get_object_or_404(Review, id=id_review)
     review.delete()
     return redirect("/edit_reviews/")
 
 
+@login_required
 def delete_ticket(request, id_ticket):
     ticket = get_object_or_404(Ticket, id=id_ticket)
     context = {"ticket": ticket}
     return render(request, "blog/delete_ticket.html", context)
 
 
+@login_required
 def confirm_delete_ticket(request, id_ticket):
     ticket = get_object_or_404(Ticket, id=id_ticket)
     ticket.delete()
     return redirect("/edit_tickets/")
 
 
+@login_required
 def edit_ticket(request, id_ticket):
     instance_ticket = get_object_or_404(Ticket, id=id_ticket)
     form = NewTicketForm(instance=instance_ticket)
@@ -194,6 +210,7 @@ def edit_ticket(request, id_ticket):
     return render(request, "blog/edit_ticket.html", context)
 
 
+@login_required
 def edit_review(request, id_review):
     instance_review = get_object_or_404(Review, id=id_review)
     form = NewReviewForm(instance=instance_review)
@@ -208,6 +225,7 @@ def edit_review(request, id_review):
     return render(request, "blog/edit_review.html", context)
 
 
+@login_required
 def comment_ticket(request):
     user = request.user
     user_tickets = user.ticket_set.all()
@@ -238,6 +256,29 @@ def comment_ticket(request):
     return render(request, "blog/comment_ticket.html", context)
 
 
-def create_review(request):
-    context = {}
-    return render(request, "blog/create_review.html", context)
+@login_required
+def create_review(request, id_review=None, id_ticket=None):
+    review_instance = (
+        Review.objects.get(pk=id_review) if id_review is not None else None
+    )
+    ticket_instance = (
+        Ticket.objects.get(pk=id_ticket) if id_ticket is not None else None
+    )
+    if request.method == "GET":
+        ticket_form = NewTicketForm(instance=ticket_instance)
+        review_form = NewReviewForm(
+            instance=review_instance, initial={"ticket": ticket_instance}
+        )
+        context = {"ticket_form": ticket_form, "review_form": review_form}
+        return render(request, "blog/create_review.html", context)
+    elif request.method == "POST":
+        ticket_form = NewTicketForm(request.POST, request.FILES)
+        if ticket_form.is_valid():
+            new_ticket = ticket_form.save(commit=False)
+            new_ticket.user = request.user
+            new_ticket.save()
+            review_form = NewReviewForm(request.POST, initial={"ticket": new_ticket.id})
+            print(review_form)
+            return redirect("/")
+
+
