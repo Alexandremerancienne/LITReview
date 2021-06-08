@@ -8,8 +8,7 @@ Users can ask for reviews or post reviews in response to tickets published by fo
 
 ## Clone application and install packages
 
-* Clone LITReview application in your target folder:  
-git clone [https://github.com/Alexandremerancienne/LITReview.git](https://github.com/Alexandremerancienne/LITReview.git)
+* Clone LITReview application in your target folder: `git clone https://github.com/Alexandremerancienne/LITReview.git`
 
 * Create a virtual environment.
 
