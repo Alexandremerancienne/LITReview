@@ -87,6 +87,7 @@ def see_users(request):
             followed_user = AppUser.objects.get(username=followed_name)
             new_relation.followed_user = followed_user
             new_relation.save()
+            return redirect("/community/")
     new_relations = UserFollows.objects.filter(user=request.user).order_by(
         "followed_user"
     )
