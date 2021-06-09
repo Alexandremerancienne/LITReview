@@ -2,7 +2,8 @@ import operator
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import NewTicketForm, NewReviewForm, SearchUserForm, CreateReviewForm
+from .forms import NewTicketForm, NewReviewForm, SearchUserForm
+from .forms import CreateReviewForm
 from .models import Ticket, Review, UserFollows
 from accounts.models import AppUser
 from itertools import chain
