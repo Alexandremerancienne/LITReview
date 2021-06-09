@@ -28,6 +28,24 @@ class NewReviewForm(ModelForm):
         fields = ["ticket", "headline", "rating", "body"]
 
 
+class CreateReviewForm(ModelForm):
+    RATING_CHOICE = (
+        ("0", "0"),
+        ("1", "1"),
+        ("2", "2"),
+        ("3", "3"),
+        ("4", "4"),
+        ("5", "5"),
+    )
+    rating = forms.ChoiceField(
+        widget=forms.RadioSelect, choices=RATING_CHOICE, label="Rating"
+    )
+
+    class Meta:
+        model = Review
+        fields = ["headline", "rating", "body"]
+
+
 class FollowUserForm(ModelForm):
     class Meta:
         model = UserFollows

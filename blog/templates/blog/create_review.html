@@ -10,9 +10,7 @@
         {% endfor %}
         <hr/>
         {% for field in review_form %}
-            {% if field.name != "ticket" %}
-                {{field|as_crispy_field}}
-            {% endif %}
+            {{field|as_crispy_field}}
         {% endfor %}
         <input class="btn btn-primary" type="submit" value="Send" />
     </form>

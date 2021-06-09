@@ -2,7 +2,7 @@ import operator
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import NewTicketForm, NewReviewForm, SearchUserForm
+from .forms import NewTicketForm, NewReviewForm, SearchUserForm, CreateReviewForm
 from .models import Ticket, Review, UserFollows
 from accounts.models import AppUser
 from itertools import chain
@@ -178,7 +178,7 @@ def delete_review(request, id_review):
 def confirm_delete_review(request, id_review):
     review = get_object_or_404(Review, id=id_review)
     review.delete()
-    return redirect("/edit_reviews/")
+    return redirect("/edit_posts/")
 
 
 @login_required
@@ -192,7 +192,7 @@ def delete_ticket(request, id_ticket):
 def confirm_delete_ticket(request, id_ticket):
     ticket = get_object_or_404(Ticket, id=id_ticket)
     ticket.delete()
-    return redirect("/edit_tickets/")
+    return redirect("/edit_posts/")
 
 
 @login_required
@@ -267,7 +267,7 @@ def create_review(request, id_review=None, id_ticket=None):
     )
     if request.method == "GET":
         ticket_form = NewTicketForm(instance=ticket_instance)
-        review_form = NewReviewForm(
+        review_form = CreateReviewForm(
             instance=review_instance, initial={"ticket": ticket_instance}
         )
         context = {"ticket_form": ticket_form, "review_form": review_form}
@@ -278,19 +278,10 @@ def create_review(request, id_review=None, id_ticket=None):
             new_ticket = ticket_form.save(commit=False)
             new_ticket.user = request.user
             new_ticket.save()
-
-
-
-            review_form = NewReviewForm(request.POST)
-
-
-
-
-
-            review_form.ticket = new_ticket
-            print(review_form)
+            review_form = CreateReviewForm(request.POST)
             if review_form.is_valid():
                 new_review = review_form.save(commit=False)
                 new_review.user = request.user
+                new_review.ticket = new_ticket
                 new_review.save()
                 return redirect("/")
