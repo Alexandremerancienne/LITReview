@@ -90,6 +90,11 @@ def logout(request):
     return render(request, "accounts/logout.html", context)
 
 
+def reset_done(request):
+    context = {}
+    return render(request, "registration/reset_completed.html", context)
+
+
 def register(request):
     form = CreateUserForm()
     if request.method == "POST":

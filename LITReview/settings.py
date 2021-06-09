@@ -145,5 +145,7 @@ AUTH_USER_MODEL = "accounts.AppUser"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
+EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
+
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 

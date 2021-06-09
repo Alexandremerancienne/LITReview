@@ -3,7 +3,7 @@
 
 {% block content %}
     <br/>
-    <form method="POST" action="{% url 'create_review' %}">
+    <form method="POST" action="{% url 'create_review' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in ticket_form %}
             {{field|as_crispy_field}}
