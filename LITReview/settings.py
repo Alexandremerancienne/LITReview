@@ -132,7 +132,8 @@ STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),
-                    os.path.join(BASE_DIR, "uploads"),]
+                    os.path.join(BASE_DIR, "uploads"),
+                    ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -148,4 +149,3 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
-
