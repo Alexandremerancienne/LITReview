@@ -13,7 +13,7 @@ class Ticket(models.Model):
     - Description;
     - User;
     - Image (book cover);
-    - Date on which the ticket was created"""
+    - Date of creation"""
 
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True)
@@ -37,7 +37,7 @@ class Review(models.Model):
     - Headline;
     - Body (optional comments);
     - User;
-    - Date on which the review was created"""
+    - Date of creation"""
 
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(
