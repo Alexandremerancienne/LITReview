@@ -10,11 +10,15 @@ from django.db.models import CharField, Value
 from blog.models import Review, Ticket, UserFollows
 
 
-# Create your views here.
-
-
 @login_required
 def homepage(request):
+
+    """A function to provide homepage feed
+    with the following information:
+
+    - Posts (tickets & reviews) from current user;
+    - Posts from all followed users"""
+
     user = request.user
     user_tickets = user.ticket_set.all()
     user_reviews = user.review_set.all()
@@ -85,17 +89,26 @@ def homepage(request):
 
 @login_required
 def logout(request):
+
+    """A function to log out"""
+
     context = {}
     django_logout(request)
     return render(request, "accounts/logout.html", context)
 
 
 def reset_done(request):
+
+    """A function to confirm registration"""
+
     context = {}
     return render(request, "registration/reset_completed.html", context)
 
 
 def register(request):
+
+    """A function to register on LITReview website"""
+
     form = CreateUserForm()
     if request.method == "POST":
         form = CreateUserForm(request.POST)

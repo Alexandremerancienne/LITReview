@@ -1,9 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
-
 
 class AppUser(AbstractUser):
+    """A class to represent a User.
+    AppUser inherits from AbstractUser class."""
+
     pass
 
     def __str__(self):

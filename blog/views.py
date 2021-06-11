@@ -10,16 +10,20 @@ from itertools import chain
 from django.db.models import CharField, Value
 
 
-# Create your views here.
-
 @login_required
 def main(request):
+
+    """A function to render the main page"""
+
     context = {}
     return render(request, "blog/main.html", context)
 
 
 @login_required
 def add_ticket(request, id_ticket=None):
+
+    """A function to create a ticket"""
+
     ticket_instance = (
         Ticket.objects.get(pk=id_ticket) if id_ticket is not None else None
     )
@@ -38,12 +42,23 @@ def add_ticket(request, id_ticket=None):
 
 @login_required
 def choose_review(request):
+
+    """A function to choose
+    between the following options:
+
+    - Create a ticket and a review answering to it;
+    - Answer to an existing ticket"""
+
     context = {}
     return render(request, "blog/choose_review.html", context)
 
 
 @login_required
 def add_review(request, id_review=None, id_ticket=None):
+
+    """A function to add a review
+    in response to an existing ticket"""
+
     review_instance = (
         Review.objects.get(pk=id_review) if id_review is not None else None
     )
@@ -67,6 +82,12 @@ def add_review(request, id_review=None, id_ticket=None):
 
 @login_required
 def see_users(request):
+
+    """A function to:
+
+    - See all the users of LITReview website;
+    - Follow new users"""
+
     users = AppUser.objects.all().order_by("username")
     users_names = [user.username for user in users]
     relations = UserFollows.objects.filter(user=request.user)
@@ -98,6 +119,9 @@ def see_users(request):
 
 @login_required
 def unfollow_user(request, id_user):
+
+    """A function to send request to unfollow a user"""
+
     followed_user = get_object_or_404(AppUser, id=id_user)
     context = {"followed_user": followed_user}
     return render(request, "blog/unfollow_user.html", context)
@@ -105,6 +129,10 @@ def unfollow_user(request, id_user):
 
 @login_required
 def confirm_unfollow(request, id_user):
+
+    """A function to confirm unfollow request
+    and delete a user from followed users"""
+
     followed_user = get_object_or_404(AppUser, id=id_user)
     relation = UserFollows.objects.filter(
         user=request.user, followed_user=followed_user
@@ -115,6 +143,10 @@ def confirm_unfollow(request, id_user):
 
 @login_required
 def edit_posts(request):
+
+    """A function to display one's posts
+    and allow their edition"""
+
     user = request.user
     user_reviews = user.review_set.all()
     user_tickets = user.ticket_set.all()
@@ -138,6 +170,9 @@ def edit_posts(request):
 
 @login_required
 def edit_reviews(request):
+
+    """A function to edit one's reviews on Post page"""
+
     user = request.user
     user_reviews = user.review_set.all()
     ordered_reviews = sorted(user_reviews,
@@ -149,6 +184,9 @@ def edit_reviews(request):
 
 @login_required
 def edit_tickets(request):
+
+    """A function to edit one's tickets on Post page"""
+
     user = request.user
     user_tickets = user.ticket_set.all()
     user_reviews = user.review_set.all()
@@ -170,6 +208,9 @@ def edit_tickets(request):
 
 @login_required
 def delete_review(request, id_review):
+
+    """A function to ask for the deletion of one's review"""
+
     review = get_object_or_404(Review, id=id_review)
     context = {"review": review}
     return render(request, "blog/delete_review.html", context)
@@ -177,6 +218,9 @@ def delete_review(request, id_review):
 
 @login_required
 def confirm_delete_review(request, id_review):
+
+    """A function to confirm the deletion of one's review"""
+
     review = get_object_or_404(Review, id=id_review)
     review.delete()
     return redirect("/edit_posts/")
@@ -184,6 +228,9 @@ def confirm_delete_review(request, id_review):
 
 @login_required
 def delete_ticket(request, id_ticket):
+
+    """A function to ask for the deletion of one's ticket"""
+
     ticket = get_object_or_404(Ticket, id=id_ticket)
     context = {"ticket": ticket}
     return render(request, "blog/delete_ticket.html", context)
@@ -191,6 +238,9 @@ def delete_ticket(request, id_ticket):
 
 @login_required
 def confirm_delete_ticket(request, id_ticket):
+
+    """A function to confirm the deletion of one's ticket"""
+
     ticket = get_object_or_404(Ticket, id=id_ticket)
     ticket.delete()
     return redirect("/edit_posts/")
@@ -198,6 +248,9 @@ def confirm_delete_ticket(request, id_ticket):
 
 @login_required
 def edit_ticket(request, id_ticket):
+
+    """A function to edit a particular ticket"""
+
     instance_ticket = get_object_or_404(Ticket, id=id_ticket)
     form = NewTicketForm(instance=instance_ticket)
     if request.method == "POST":
@@ -214,6 +267,9 @@ def edit_ticket(request, id_ticket):
 
 @login_required
 def edit_review(request, id_review):
+
+    """A function to edit a particular review"""
+
     instance_review = get_object_or_404(Review, id=id_review)
     form = NewReviewForm(instance=instance_review)
     if request.method == "POST":
@@ -229,6 +285,10 @@ def edit_review(request, id_review):
 
 @login_required
 def comment_ticket(request):
+
+    """A function to create a review
+    in response to a ticket"""
+
     user = request.user
     user_tickets = user.ticket_set.all()
     followed_users = [
@@ -260,6 +320,12 @@ def comment_ticket(request):
 
 @login_required
 def create_review(request, id_review=None, id_ticket=None):
+
+    """A function to create a new review.
+
+    The function first creates a ticket,
+    then creates a review answering to the newly created ticket."""
+
     review_instance = (
         Review.objects.get(pk=id_review) if id_review is not None else None
     )
